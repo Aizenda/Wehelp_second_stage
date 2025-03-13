@@ -14,7 +14,7 @@ def create_attractions_table(cursor):
         mrt VARCHAR(50),
         lat FLOAT NOT NULL,
         lng FLOAT NOT NULL,
-        images JSON NOT NULL
+        images TEXT NOT NULL
     );
     """
     cursor.execute(create_table_query)

@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from DB import mysql_pool
 from mysql.connector import Error 
 from fastapi import APIRouter
+import json
 
 router = APIRouter()
 
@@ -57,6 +58,10 @@ async def get_attractions(page: int = Query(0, ge=0), keyword: str = Query(None)
 			cursor.execute(select_query, (limit_data,))
 
 		res = cursor.fetchall()
+
+		for attraction in res:
+				attraction["images"] = json.loads(attraction["images"])
+
 		is_full_page = len(res) == 12
 		nextpage = page + 1 if is_full_page else None
 
