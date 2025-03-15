@@ -2,7 +2,6 @@ from fastapi import *
 from fastapi.responses import JSONResponse
 from DB import mysql_pool
 from mysql.connector import Error 
-from fastapi import APIRouter
 import json
 
 router = APIRouter()
@@ -36,8 +35,7 @@ async def get_attractions(page: int = Query(0, ge=0), keyword: str = Query(None)
 			""", ('%' + keyword + '%', '%' + keyword + '%'))
 			total_rows = cursor.fetchone()
 
-			if total_rows["total_rows"] == 0:
-				return JSONResponse({"error": True, "message": "keyword not found"}, status_code=400)
+			#刪除無效code
 
 			max_page = total_rows["total_rows"] // page_size
 
@@ -58,7 +56,7 @@ async def get_attractions(page: int = Query(0, ge=0), keyword: str = Query(None)
 			cursor.execute(select_query, (limit_data,))
 
 		res = cursor.fetchall()
-
+		
 		for attraction in res:
 				attraction["images"] = json.loads(attraction["images"])
 
@@ -97,6 +95,8 @@ async def get_attraction_by_id(attractionId: int = Path(..., ge=1)):
 		"""
 		cursor.execute(query, (attractionId,))
 		result = cursor.fetchone()
+		#修正輸出為list
+		result["images"] = json.loads(result["images"])
 
 			# 如果查無資料
 		if not result:
