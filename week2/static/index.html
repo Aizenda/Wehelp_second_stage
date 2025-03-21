@@ -44,7 +44,7 @@
 <script>
   async function fetchMRT() {
     try {
-      let response = await fetch("http://127.0.0.1:8000/api/mrts");
+      let response = await fetch("http://52.196.225.29:8000/api/mrts");
       let data = await response.json();
 
       let mrtTitleContainer  = document.querySelector(".mrt__title");
@@ -109,7 +109,7 @@
       
       try {
         
-          let response = await fetch(`http://127.0.0.1:8000/api/attractions?page=${page}&keyword=${keyword}`);
+          let response = await fetch(`http://52.196.225.29:8000/api/attractions?page=${page}&keyword=${keyword}`);
           const data = await response.json();
           let attractions = data["data"];
           
