@@ -1,6 +1,8 @@
 body {
 	margin: 0;
 	padding: 0;
+  font-family: 'Noto Sans TC';
+  font-size: 16px;
 }
 
 main {
@@ -13,6 +15,7 @@ footer {
 	align-items: center;
 	background-color: #757575;
 	height: 100px;
+  color: #FFFF;
 }
 
 .header {
@@ -25,21 +28,23 @@ footer {
 }
 
 .header__title {
+  display: flex;
   font-size: 30px;
   color: #448899;
-  font-weight: 900;
-	padding-left: 10px;
+  font-weight: 700;
+  align-items: center;
   height: 34px;
 }
 
 .header__nav {
   display: flex;
+  gap:20px
 }
 
 .header__button {
   all: unset;
   cursor: pointer;
-  padding: 10px;
+  color: #666666;
 }
 
 .search__section {
@@ -78,6 +83,8 @@ footer {
 }
 
 .search__input {
+  display: flex;
+  padding-top:5px ;
   color: #757575;
   font-weight: 700;
   width: 400px;
@@ -113,16 +120,24 @@ footer {
   flex-wrap: nowrap;
   overflow-x: auto;
   white-space: nowrap;
+  scroll-behavior: smooth;
 }
 
 .mrt__title::-webkit-scrollbar {
   display: none;
 }
 
-.mrt__title > .mrt__button {
+.mrt__button {
   background-color: #FFFF;
+  color: #666666;
   border: none;
   cursor: pointer;
+  font-weight: 700;
+  font-size:16px;
+}
+
+.mrt__button:hover{
+  color: #000000;
 }
 
 .arrow--left {
@@ -149,7 +164,7 @@ footer {
 .attractions__element {
   position: relative;
   border: 1px solid #E8E8E8;
-	height: 280px;
+	height: 200px;
   border-radius: 5px;
 }
 
@@ -157,7 +172,7 @@ footer {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 85%;
+  height: 80%;
   width: 100%;
   border-radius: 5px 5px 0 0;
 }
@@ -170,7 +185,7 @@ footer {
   padding: 10px;
   width: calc(100% - 20px);
   position: absolute;
-  bottom: 15%;
+  bottom: 20%;
 	white-space: nowrap;      
   overflow: hidden;         
   text-overflow: ellipsis; 
@@ -201,7 +216,7 @@ footer {
 
 @media screen and (min-width: 601px) and (max-width: 1201px) {
 	.header{
-		width: 100%;
+		width: 90%;
 	}
 
 
@@ -225,7 +240,7 @@ footer {
 
 @media screen and (min-width: 360px) and (max-width:600px) {
 	.header{
-		width: 100%;
+		width: 90%;
 	}
 
 

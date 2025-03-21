@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
   <title>Index</title>
 </head>
 <body>
@@ -43,7 +44,7 @@
 <script>
   async function fetchMRT() {
     try {
-      let response = await fetch("http://52.196.225.29:8000/api/mrts");
+      let response = await fetch("http://127.0.0.1:8000/api/mrts");
       let data = await response.json();
 
       let mrtTitleContainer  = document.querySelector(".mrt__title");
@@ -62,8 +63,25 @@
         mrtTitleContainer.scrollLeft -= 100; 
       });
 
+      leftArrow.addEventListener("mousedown", () => {
+        leftArrow.src =  "/static/imgs/Hovered_left.png"
+      });
+
+      leftArrow.addEventListener("mouseup", () => {
+        leftArrow.src =  "/static/imgs/arrow left.png"
+      });
+
+
       rightArrow.addEventListener("click", () => {
         mrtTitleContainer.scrollLeft += 100; 
+      });
+
+      rightArrow.addEventListener("mousedown", () => {
+        rightArrow.src =  "/static/imgs/Hovered_right.png"
+      });
+
+      rightArrow.addEventListener("mouseup", () => {
+        rightArrow.src =  "/static/imgs/arrow right.png"
       });
 
     } catch (error) {
@@ -71,149 +89,149 @@
     }
   }
   fetchMRT();
-// 初始化變數
-let page = 0;
-let isLoading = false;
-let hasMoreData = true;
-let observer;
+  // 初始化變數
+  let page = 0;
+  let isLoading = false;
+  let hasMoreData = true;
+  let observer;
 
-// DOM 元素選擇器
-const grid = document.querySelector(".grid");
-const inputKeyword = document.querySelector(".search__input");
-const searchButton = document.querySelector(".search__button");
+  // DOM 元素選擇器
+  const grid = document.querySelector(".grid");
+  const inputKeyword = document.querySelector(".search__input");
+  const searchButton = document.querySelector(".search__button");
 
 
-async function fetchAttractions(keyword = "") {
-    // 避免重複請求或已無資料可載入
-    if (isLoading || !hasMoreData) return;
-    
-    isLoading = true;
-    
-    try {
-       
-        let response = await fetch(`http://52.196.225.29:8000/api/attractions?page=${page}&keyword=${keyword}`);
-        const data = await response.json();
-        let attractions = data["data"];
-        
-        if (page === 0) {
-            grid.innerHTML = "";
-        }
-  
-        renderAttractions(attractions);
-        
-        if (data["nextPage"] !== null) {
-            page = data["nextPage"];
-        } else {
-            hasMoreData = false;
-        }
-        
-        updateObserver(keyword);
-    } catch (error) {
-        console.error("載入錯誤:", error);
-    } finally {
-        isLoading = false;
-    }
-}
-
-function renderAttractions(attractions) {
-    attractions.forEach(attraction => {
-
-        let attractionsElement = document.createElement("div");
-        attractionsElement.classList.add("attractions__element");
-        
-        let imageContainer = document.createElement("div");
-        imageContainer.style.backgroundImage = `url(${attraction.images[0]})`;
-        imageContainer.classList.add("attractions__element__image");
+  async function fetchAttractions(keyword = "") {
+      // 避免重複請求或已無資料可載入
+      if (isLoading || !hasMoreData) return;
       
-        let nameElement = document.createElement("div");
-        nameElement.textContent = attraction.name;
-        nameElement.classList.add("attractions__element__name");
+      isLoading = true;
+      
+      try {
         
-        let bottomContainer = document.createElement("div");
-        bottomContainer.classList.add("attractions__element__bottom");
-        
-        let leftText = document.createElement("div");
-        leftText.textContent = attraction.mrt;
-        leftText.classList.add("attractions__element__bottom__left");
-        
-        let rightText = document.createElement("div");
-        rightText.textContent = attraction.category;
-        rightText.classList.add("attractions__element__bottom__right");
-        
-        // 組合元素
-        bottomContainer.appendChild(leftText);
-        bottomContainer.appendChild(rightText);
-        
-        attractionsElement.appendChild(imageContainer);
-        attractionsElement.appendChild(nameElement);
-        attractionsElement.appendChild(bottomContainer);
-        
-        grid.appendChild(attractionsElement);
-    });
-}
-
-function updateObserver(keyword) {
-    // 如果沒有更多資料則不設置觀察器
-    if (!hasMoreData) return;
+          let response = await fetch(`http://127.0.0.1:8000/api/attractions?page=${page}&keyword=${keyword}`);
+          const data = await response.json();
+          let attractions = data["data"];
+          
+          if (page === 0) {
+              grid.innerHTML = "";
+          }
     
-    // 如果已有觀察器則斷開連接
-    if (observer) observer.disconnect();
-    
-    // 取得最後一個元素並觀察
-    let lastItem = grid.lastElementChild;
-    if (lastItem) {
-        observer = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting && !isLoading) {
-                fetchAttractions(keyword);
-            }
-        }, { threshold: 1 });
+          renderAttractions(attractions);
+          
+          if (data["nextPage"] !== null) {
+              page = data["nextPage"];
+          } else {
+              hasMoreData = false;
+          }
+          
+          updateObserver(keyword);
+      } catch (error) {
+          console.error("載入錯誤:", error);
+      } finally {
+          isLoading = false;
+      }
+  }
+
+  function renderAttractions(attractions) {
+      attractions.forEach(attraction => {
+
+          let attractionsElement = document.createElement("div");
+          attractionsElement.classList.add("attractions__element");
+          
+          let imageContainer = document.createElement("div");
+          imageContainer.style.backgroundImage = `url(${attraction.images[0]})`;
+          imageContainer.classList.add("attractions__element__image");
         
-        observer.observe(lastItem);
-    }
-}
+          let nameElement = document.createElement("div");
+          nameElement.textContent = attraction.name;
+          nameElement.classList.add("attractions__element__name");
+          
+          let bottomContainer = document.createElement("div");
+          bottomContainer.classList.add("attractions__element__bottom");
+          
+          let leftText = document.createElement("div");
+          leftText.textContent = attraction.mrt;
+          leftText.classList.add("attractions__element__bottom__left");
+          
+          let rightText = document.createElement("div");
+          rightText.textContent = attraction.category;
+          rightText.classList.add("attractions__element__bottom__right");
+          
+          // 組合元素
+          bottomContainer.appendChild(leftText);
+          bottomContainer.appendChild(rightText);
+          
+          attractionsElement.appendChild(imageContainer);
+          attractionsElement.appendChild(nameElement);
+          attractionsElement.appendChild(bottomContainer);
+          
+          grid.appendChild(attractionsElement);
+      });
+  }
 
-// 事件監聽器設置
-function setupEventListeners() {
-    // MRT 按鈕點擊事件
-    document.querySelector(".mrt__title").addEventListener("click", (event) => {
-        if (event.target.classList.contains("mrt__button")) {
-            let keyword = event.target.textContent.trim();
-            resetSearch();
-            fetchAttractions(keyword);
-        }
-    });
-    
-    // 搜尋按鈕點擊事件
-    searchButton.addEventListener("click", () => {
-        performSearch();
-    });
-    
-    // 輸入框 Enter 鍵事件
-    inputKeyword.addEventListener("keypress", (event) => {
-        if (event.key === "Enter") {
-            performSearch();
-        }
-    });
-}
+  function updateObserver(keyword) {
+      // 如果沒有更多資料則不設置觀察器
+      if (!hasMoreData) return;
+      
+      // 如果已有觀察器則斷開連接
+      if (observer) observer.disconnect();
+      
+      // 取得最後一個元素並觀察
+      let lastItem = grid.lastElementChild;
+      if (lastItem) {
+          observer = new IntersectionObserver(entries => {
+              if (entries[0].isIntersecting && !isLoading) {
+                  fetchAttractions(keyword);
+              }
+          }, { threshold: 1 });
+          
+          observer.observe(lastItem);
+      }
+  }
 
-function performSearch() {
-    let keyword = inputKeyword.value.trim();
-    if (keyword) {
-        resetSearch();
-        fetchAttractions(keyword);
-    }
-}
+  // 事件監聽器設置
+  function setupEventListeners() {
+      // MRT 按鈕點擊事件
+      document.querySelector(".mrt__title").addEventListener("click", (event) => {
+          if (event.target.classList.contains("mrt__button")) {
+              let keyword = event.target.textContent.trim();
+              resetSearch();
+              fetchAttractions(keyword);
+          }
+      });
+      
+      // 搜尋按鈕點擊事件
+      searchButton.addEventListener("click", () => {
+          performSearch();
+      });
+      
+      // 輸入框 Enter 鍵事件
+      inputKeyword.addEventListener("keypress", (event) => {
+          if (event.key === "Enter") {
+              performSearch();
+          }
+      });
+  }
 
-function resetSearch() {
-    page = 0;
-    hasMoreData = true;
-}
+  function performSearch() {
+      let keyword = inputKeyword.value.trim();
+      if (keyword) {
+          resetSearch();
+          fetchAttractions(keyword);
+      }
+  }
 
-// 設置事件監聽器
-setupEventListeners();
+  function resetSearch() {
+      page = 0;
+      hasMoreData = true;
+  }
 
-// 初次載入
-fetchAttractions();
+  // 設置事件監聽器
+  setupEventListeners();
+
+  // 初次載入
+  fetchAttractions();
 </script>
 </body>
 </html>
