@@ -77,8 +77,8 @@ async def get_attractions(page: int = Query(0, ge=0), keyword: str = Query(None)
 		if conn:
 			conn.close()
 
-@router.get("/api/attraction/{attractionId}")
-async def get_attraction_by_id(attractionId: int = Path(..., ge=1)):  
+@router.get("/api/attraction/{id}")
+async def get_attraction_by_id(id: int = Path(..., ge=1)):  
 	""" 根據 attractionId 查詢特定景點資訊 """
 	conn = None
 	cursor = None
@@ -93,15 +93,15 @@ async def get_attraction_by_id(attractionId: int = Path(..., ge=1)):
 				FROM attractions 
 				WHERE id = %s
 		"""
-		cursor.execute(query, (attractionId,))
+		cursor.execute(query, (id,))
 		result = cursor.fetchone()
-		#修正輸出為list
-		result["images"] = json.loads(result["images"])
 
-			# 如果查無資料
 		if not result:
 			return JSONResponse({"error": True, "message": "景點不存在"}, status_code=400)
-
+		
+		#修正輸出為list
+		result["images"] = json.loads(result["images"])
+		
 		return JSONResponse({"data": result}, status_code=200)
 
 	except Error as e:  # 捕獲 MySQL 錯誤

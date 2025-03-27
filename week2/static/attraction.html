@@ -3,9 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/static/css/attraction.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
   <title>Attraction</title>
 </head>
 <body>
-  
+  <header class="header">
+    <p class="header__title">台北一日遊</p>
+    <nav class="header__nav">
+      <button class="header__button">預定行程</button>
+      <button class="header__button">登入/註冊</button>
+    </nav>
+  </header>
+  <main>
+    <div class="main__grid">
+      <span class="attraction__element__image">
+					<img src = "/static/imgs/arrow left.png" class="attraction__element__leftArrow" onclick="plusDivs(-1)">
+					<img src="/static/imgs/arrow right.png" class="attraction__element__rightArrow" onclick="plusDivs(1)">
+					<div class="attraction__element__dots"></div>
+			</span>
+      <span class="attraction__element__order">
+				<div class="order__element__name"></div>
+				<div class="order__element__category"></div>
+				<div class="order__element">
+					<div>訂購導覽行程</div>
+					<div>以此景點為中心的一日行程，帶您探索城市角落故事</div>
+					<div style="display: flex; text-align: center;">選擇日期：<input type="date"></div>
+					<div style="display: flex; text-align: center;">選擇時間：
+						<input type="radio" name="time" value="2000" checked>上半天
+						<input type="radio" name="time" value="2500">下半天
+					</div>
+					<div>導覽費用：<span id="price">2000</span> 元</div>
+					<button>開始預約行程</button>
+				</div>
+			</span>
+			<div class="describe__element">
+				<div class="describe__element__introduce">
+				</div>
+				<div style="color: #666666; font-weight: 700; font-size: 16px;">
+					景點地址：
+					<div class="describe__element__address"></div>
+				</div>
+				<div style="color: #666666; font-weight: 700; font-size: 16px;">
+					交通方式：
+					<div class="describe__element__transportation"></div>
+				</div>
+			</div>
+    </div>
+  </main>
+  <footer>COPYRIGHT © 2021 台北一日遊</footer>
 </body>
+
+
+<script  src="/static/js/attraction.js"></script>
 </html>
