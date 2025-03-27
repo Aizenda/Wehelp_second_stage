@@ -118,3 +118,14 @@ function showDivs(n) {
 	slides[slideIndex-1].style.display = "block";
 	dots[slideIndex - 1].classList.add("attraction__element__blackDot");
 }
+
+//7.點擊左右箭頭顏色改變
+const rightArrow = document.querySelector(".attraction__element__rightArrow");
+rightArrow.addEventListener("mousedown", () => {
+	rightArrow.src = "/static/imgs/Hovered_right.png";
+});
+
+const leftArrow = document.querySelector(".attraction__element__leftArrow");
+leftArrow.addEventListener("mousedown", () => {
+	leftArrow.src = "/static/imgs/Hovered_left.png";
+});
