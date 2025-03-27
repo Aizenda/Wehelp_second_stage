@@ -125,7 +125,15 @@ rightArrow.addEventListener("mousedown", () => {
 	rightArrow.src = "/static/imgs/Hovered_right.png";
 });
 
+rightArrow.addEventListener("mouseup", () => {
+	rightArrow.src = "/static/imgs/arrow right.png";
+});
+
 const leftArrow = document.querySelector(".attraction__element__leftArrow");
 leftArrow.addEventListener("mousedown", () => {
 	leftArrow.src = "/static/imgs/Hovered_left.png";
+});
+
+leftArrow.addEventListener("mouseup", () => {
+	leftArrow.src = "/static/imgs/arrow left.png";
 });
