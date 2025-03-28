@@ -23,6 +23,24 @@ footer {
   position: static;
 }
 
+button{
+  border: 0;
+}
+
+.header__hr{
+  border: 1px solid #E8E8E8;
+  width: 100%; 
+  margin: 0;
+  margin-bottom: 40px;
+}
+
+.main__hr{
+  margin-top: 20px;
+  border: 1px solid #E8E8E8;
+  width: 100%; 
+  margin: 0;
+}
+
 .header {
   display: flex;
   width: 1200px;
@@ -30,7 +48,6 @@ footer {
   justify-content: space-between;
   align-items: center;
   height: 54px;
-  margin-bottom: 40px;
 }
 
 .header__title {
@@ -62,6 +79,10 @@ footer {
 }
 
 .main__grid> *:nth-child(3){
+  grid-column: span 2; 
+}
+
+.main__grid> *:nth-child(4){
   grid-column: span 2; 
 }
 
@@ -102,21 +123,23 @@ footer {
   width:100%;
 }
 
-.attraction__element__dots{
+.attraction__element__dots {
   display: flex;
   position: absolute;
   bottom: 10px;
   left: 50%;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
+  max-width: 80%; 
+  gap: 10px; 
 }
 
-.attraction__element__dot{
+.attraction__element__dot {
   border-radius: 50%;
-  height: 12px;
-  width: 12px;
-  background-color: #FFFFFF;
-  margin:10px;
+  height: 8px; 
+  width: 8px; 
+  background-color: rgba(255, 255, 255, 0.7); 
   cursor: pointer;
+  flex-shrink: 0;; 
 }
 
 .attraction__element__blackDot{
@@ -190,6 +213,7 @@ footer {
   margin: auto;
   width: 1200px;
   gap:30px;
+
   margin-bottom: 40px;
 }
 
@@ -198,33 +222,35 @@ footer {
   font-size: 16px;
   font-weight: 400;
   height: auto;
-  margin-top: 40px;
+  text-align: justify;
+  margin: 0;
 }
 
 .describe__element__address{
   color:#666666;
   font-size: 16px;
   font-weight: 400;
+  text-align: justify;
 }
 
 .describe__element__transportation{
   color:#666666;
   font-size: 16px;
   font-weight: 400;
+  text-align: justify;
 }
 
 
 input[type="date"] {
   position: relative;
   background: url("/static/imgs/image.png") no-repeat right 10px center;
-  background-size: 20px; /* 調整圖片大小 */
-  padding-right: 30px; /* 確保文本不會重疊圖片 */
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background-size: 20px;
+  padding-right: 30px;
+  border: 0;;
   height: 30px;
+  background-color: #FFFFFF;
 }
 
-/* ✅ 隱藏內建的日曆圖示（適用於 Chrome） */
 input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
   position: absolute;
@@ -232,6 +258,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 100%;
   height: 100%;
   cursor: pointer;
+}
+
+input[type="radio"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  position: relative;
+}
+
+input[type="radio"]:checked {
+  background-color: #448899;
+  border: 2px solid white;
 }
 
 .err__element{
@@ -249,15 +289,43 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
   
   main{
-    width: 90%;
+    width: 100%;
+  }
+
+  .main__grid{
+    grid-template-columns: repeat(1, 1fr); 
   }
   
+  .main__grid > *:nth-child(1){
+    height: 360px;
+    width: 100%;
+    grid-column: span 2; 
+  }
+  
+  .main__grid > *:nth-child(2),
+  .main__grid > *:nth-child(4){
+    width: 90%;
+    grid-column: span 2; 
+  }
+  
+  .attraction__element__slide{
+    border-radius: 0;
+  }
   .describe__element{
     width: 100%;
   }
 
+  .main__hr{
+    width: 90%; 
+    margin: auto;
+  }
+  
   .attraction__element__order{
     grid-template-rows: auto;
+  }
+
+  .order__element{
+    gap: 20px;
   }
 
   footer{
@@ -279,14 +347,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
   
   .main__grid > *:nth-child(1){
-    grid-column: span 2; 
     height: 360px;
-  }
-
-  .main__grid > *:nth-child(2),
-  .main__grid > *:nth-child(3){
+    width: 100%;
     grid-column: span 2; 
+  }
+  
+  .main__grid > *:nth-child(2),
+  .main__grid > *:nth-child(4){
     width: 90%;
+    grid-column: span 2; 
   }
 
   .attraction__element__slide{
@@ -296,5 +365,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   footer{
     position: static;
   }
+
+  .header__hr{
+    margin-bottom: 0px;
+  }
+  
+  .main__hr{
+    width: 90%; 
+    margin: auto;
+  }
+  
 }
 
