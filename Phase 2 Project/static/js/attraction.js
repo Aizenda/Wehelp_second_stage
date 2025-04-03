@@ -37,7 +37,7 @@ radios.forEach(radio => {
 
 // 5. 景點數據獲取和渲染
 async function getAttractionData(id) {
-	const attraction_url = `http://127.0.0.1:8000/api/attraction/${id}`;
+	const attraction_url = `/api/attraction/${id}`;
 	const attraction_response = await fetch(attraction_url);
 	const response_data = await attraction_response.json();
 
@@ -124,65 +124,7 @@ async function getAttraction(id) {
 	}
 }
 
-// 假設 `id` 來自某處，例如 URL 參數
 getAttraction(id);
-
-
-// 5. 景點數據獲取和渲染
-// async function getAttraction() {
-// 	const attraction_url =`http://127.0.0.1:8000/api/attraction/${id}`;
-// 	const attraction_response = await fetch(attraction_url);
-// 	const response_data = await attraction_response.json();
-// 	const attraction_data = response_data.data;
-
-// 	if (!attraction_response.ok) {
-// 			while (main.firstChild) {
-// 					main.removeChild(main.firstChild);
-// 			};
-// 			const err_element = main.appendChild(document.createElement("div"));
-// 			err_element.classList.add("err__element")
-// 			err_element.textContent = `${"ERROR" + ":"+ response_data.message}`;
-// 			return
-// 	};
-
-// 	const img = attraction_data["images"];
-// 	const name = attraction_data["name"];
-// 	const category = attraction_data["category"];
-// 	const mrt = attraction_data["mrt"];
-// 	const description = attraction_data["description"];
-// 	const addrestext = attraction_data["address"];
-// 	const transport = attraction_data["transport"];
-
-// 	img.forEach((imgurl ,index)=>{
-// 			const slide = document.createElement("div");
-// 			slide.classList.add("attraction__element__slide");
-// 			slide.style.backgroundImage = `url("${imgurl}")`;
-// 			spanImg.appendChild(slide);
-
-// 			const dots = document.createElement("span");
-// 			dots.classList.add("attraction__element__dot");
-// 			if (index === 0) {
-// 					dots.classList.add("attraction__element__blackDot");
-// 					slide.style.display = "inline-block";
-// 			}else{
-// 				slide.style.display = "none";
-// 			};
-
-			
-// 			dots.addEventListener("click", function() {
-// 					currentSlide(index + 1);
-// 			});
-// 			dot.appendChild(dots);
-// 	});
-
-// 	spanName.textContent = name;
-// 	spanCategory.textContent = category+" at "+mrt;
-// 	introduce.textContent = description;
-// 	address.textContent = addrestext;
-// 	transportation.textContent = transport;
-// }
-// getAttraction();
-
 
 // 6. 輪播功能
 let slideIndex = 0;

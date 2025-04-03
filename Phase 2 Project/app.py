@@ -1,11 +1,14 @@
 from fastapi import *
 from fastapi.responses import FileResponse
-from routers import attractions
+from routers import attractions ,	Login
 from fastapi.staticfiles import StaticFiles
+from datetime import datetime, timedelta
 
 app=FastAPI()
 app.include_router(attractions.router)
+app.include_router(Login.router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)
