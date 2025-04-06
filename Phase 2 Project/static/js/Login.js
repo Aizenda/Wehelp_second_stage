@@ -69,6 +69,7 @@ signupForm.addEventListener("submit", async function (event) {
     });
 
     const result = await response.json();
+    
     if (response.ok) {
         signupRequest.classList.add("signup__element__request__show");
         signupRequest.style.color = "green";
@@ -96,7 +97,7 @@ document.addEventListener("DOMContentLoaded",async ()=>{
 	});
 
 	const result  = await res.json()
-    
+
 	if(!result.data){
 		return;
 	}

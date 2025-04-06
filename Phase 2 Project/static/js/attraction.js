@@ -1,101 +1,175 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="/static/css/attraction.css">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
-  <title>Attraction</title>
-</head>
-<body>
-	<div class="modal__overlay"></div>
-  <header class="header">
-	<p class="header__title">台北一日遊</p>
-    <nav class="header__nav">
-      <button class="header__button__book" id="reserve">預定行程</button>
-      <button class="header__button__signin" id="signin">登入/註冊</button>
-    </nav>
-  </header>
-	<form id="signinForm" class="signin__content">
-		<div class="signin__element__color"></div>
-		<div class="signin__element__title">登入會員帳號</div>
-		<img src="/static/imgs/8de46cdc235bdc9b370c21e0028a68e6.png" class="signin__content__img"/>
-		<div class="signin__element__email">
-				<input type="email" name="email" placeholder="輸入電子信箱" required/>
-		</div>
-		<div class="signin__element__password">
-				<input type="password" name="password" placeholder="輸入密碼" required />
-		</div>
-		<div class="signin__element__request"></div>
-		<div class="signin__content__buttom">
-			<button type="submit" class="signin__content__buttom__style">登入帳號</button>
-		</div>
-		<div class="signin__element__link" class="signin__content__link">還沒有帳戶？點此註冊</div>
-	</form>
+// 1. 首頁返回功能
+function homepage(className) {
+	const button = document.querySelector(`.${className}`);
+	if (button) {
+			button.addEventListener("click", () => {
+					window.location.href = "/";
+			});
+	} else {
+			console.error(`Element with class "${className}" not found.`);
+	}
+}
+homepage("header__title");
 
-	<form id="signupForm" class="signup__content">
-		<div class="signup__element__color"></div>
-		<div class="signup__element__title">註冊會員帳號</div>
-		<img src="/static/imgs/8de46cdc235bdc9b370c21e0028a68e6.png" class="signup__content__img"/>
-		<div class="signup__element__email">
-			<input type="text" id="name" placeholder="輸入姓名" required />
-	</div>
-		<div class="signup__element__email">
-				<input type="email" id="email" placeholder="輸入電子信箱" required />
-		</div>
-		<div class="signup__element__password">
-				<input type="password" id="password" placeholder="輸入密碼" required />
-		</div>
-		<div class="signup__element__request"></div>
-		<div class="signup__content__buttom">
-			<button type="submit" class="signup__content__buttom__style">註冊帳號</button>
-		</div>
-		<div class="signup__element__link" class="signup__content__link">已經有帳戶了？點此登入</div>
-	</div>
-</form>
-  <hr class = "header__hr"/>
-  <main>
-    <div class="main__grid">
-      	<span class="attraction__element__image">
-			<img src = "/static/imgs/arrow left.png" class="attraction__element__leftArrow" onclick="plusDivs(-1)">
-			<img src="/static/imgs/arrow right.png" class="attraction__element__rightArrow" onclick="plusDivs(1)">
-			<div class="attraction__element__dots"></div>
-		</span>
-		<span class="attraction__element__order">
-			<div class="order__element__name"></div>
-			<div class="order__element__category"></div>
-			<div class="order__element">
-				<div>訂購導覽行程</div>
-				<div>以此景點為中心的一日行程，帶您探索城市角落故事</div>
-				<div style="display: flex; text-align: center;">選擇日期：<input type="date"></div>
-				<div style="display: flex; text-align: center;">選擇時間：
-					<input type="radio" name="time" value="2000" checked>上半天
-					<input type="radio" name="time" value="2500">下半天
-				</div>
-				<div>導覽費用：<span id="price">2000</span> 元</div>
-				<button>開始預約行程</button>
-			</div>
-		</span>
-		<hr class = "main__hr"/>
-		<div class="describe__element">
-			<div class="describe__element__introduce">
-			</div>
-			<div style="color: #666666; font-weight: 700; font-size: 16px;">
-				景點地址：
-				<div class="describe__element__address"></div>
-			</div>
-			<div style="color: #666666; font-weight: 700; font-size: 16px;">
-				交通方式：
-				<div class="describe__element__transportation"></div>
-			</div>
-		</div>
-    </div>
-	
-  </main>
-  <footer>COPYRIGHT © 2021 台北一日遊</footer>
-</body>
+// 2. URL 和 ID 處理
+const URL = window.location.pathname.split("/");
+const id  = URL[URL.length - 1];
+
+// 3. DOM 元素選取
+const main = document.querySelector("main");
+const spanImg = document.querySelector(".attraction__element__image");
+const dot = document.querySelector(".attraction__element__dots")
+const spanName = document.querySelector(".order__element__name");
+const spanCategory = document.querySelector(".order__element__category");
+const spanOrder = document.querySelector(".order__element");
+const introduce = document.querySelector(".describe__element__introduce");
+const address = document.querySelector(".describe__element__address");
+const transportation = document.querySelector(".describe__element__transportation");
+
+// 4. 時間選擇price更新
+const radios  = document.querySelectorAll("input[name='time']");
+const priceSpan  = document.querySelector("#price");
+radios.forEach(radio => {
+	radio.addEventListener("change", function () {
+			priceSpan.textContent = this.value;
+	});
+});
+
+// 5. 景點數據獲取和渲染
+async function getAttractionData(id) {
+	const attraction_url = `/api/attraction/${id}`;
+	const attraction_response = await fetch(attraction_url);
+	const response_data = await attraction_response.json();
+
+	if (!attraction_response.ok) {
+			showError(response_data.message);
+			return null;
+	}
+
+	return response_data.data;
+}
+
+function showError(message) {
+	while (main.firstChild) {
+			main.removeChild(main.firstChild);
+	}
+	const err_element = document.createElement("div");
+	err_element.classList.add("err__element");
+	err_element.textContent = `ERROR: ${message}`;
+	main.appendChild(err_element);
+}
+
+function preloadImages(imageUrls, callback) {
+	let loadedCount = 0;
+	const images = [];
+
+	imageUrls.forEach((url, index) => {
+			images[index] = new Image();
+			images[index].src = url;
+			images[index].onload = () => {
+					loadedCount++;
+					if (loadedCount === imageUrls.length) {
+							callback();
+					}
+			};
+	});
+}
+
+function createSlider(images) {
 
 
-<script  src="/static/js/attraction.js"></script>
-<script src="/static/js/Login.js"></script>
-</html>
+	preloadImages(images, () => {
+			images.forEach((imgurl, index) => {
+					const slide = document.createElement("div");
+					slide.classList.add("attraction__element__slide");
+					slide.style.backgroundImage = `url("${imgurl}")`;
+
+					if (index === 0) {
+							slide.style.display = "inline-block";
+					} else {
+							slide.style.display = "none";
+					}
+
+					spanImg.appendChild(slide);
+
+					// 建立點
+					const dots = document.createElement("span");
+					dots.classList.add("attraction__element__dot");
+					if (index === 0) {
+							dots.classList.add("attraction__element__blackDot");
+					}
+
+					dots.addEventListener("click", function () {
+							currentSlide(index + 1);
+					});
+
+					dot.appendChild(dots);
+			});
+	});
+}
+
+function renderAttractionInfo(data) {
+	spanName.textContent = data.name;
+	spanCategory.textContent = `${data.category} at ${data.mrt}`;
+	introduce.textContent = data.description;
+	address.textContent = data.address;
+	transportation.textContent = data.transport;
+}
+
+async function getAttraction(id) {
+	const attraction_data = await getAttractionData(id);
+	if (attraction_data) {
+			renderAttractionInfo(attraction_data);
+			createSlider(attraction_data.images);
+	}
+}
+
+getAttraction(id);
+
+// 6. 輪播功能
+let slideIndex = 0;
+
+function plusDivs(n) {
+	showDivs(slideIndex += n);
+}
+
+function currentSlide(n){ 
+	showDivs(slideIndex = n);
+}
+
+function showDivs(n) {
+	const slides = document.querySelectorAll(".attraction__element__slide");
+	const dots = document.querySelectorAll(".attraction__element__dot")
+	if(n >= slides.length){slideIndex = 0};
+	if(n < 0){slideIndex = slides.length - 1};
+
+	for (let i = 0; i < slides.length; i++) {
+			slides[i].style.display = "none";
+	}
+
+	for (i = 0; i < dots.length; i++) {
+			dots[i].classList.remove("attraction__element__blackDot");
+	}
+
+	slides[slideIndex].style.display = "block";
+	dots[slideIndex].classList.add("attraction__element__blackDot");
+}
+
+//7.點擊左右箭頭顏色改變
+const rightArrow = document.querySelector(".attraction__element__rightArrow");
+rightArrow.addEventListener("mousedown", () => {
+	rightArrow.src = "/static/imgs/Hovered_right.png";
+});
+
+rightArrow.addEventListener("mouseup", () => {
+	rightArrow.src = "/static/imgs/arrow right.png";
+});
+
+const leftArrow = document.querySelector(".attraction__element__leftArrow");
+leftArrow.addEventListener("mousedown", () => {
+	leftArrow.src = "/static/imgs/Hovered_left.png";
+});
+
+leftArrow.addEventListener("mouseup", () => {
+	leftArrow.src = "/static/imgs/arrow left.png";
+});
