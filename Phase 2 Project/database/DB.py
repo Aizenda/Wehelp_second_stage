@@ -34,5 +34,4 @@ class MySQLPool:
         except Error as err:
             raise DatabaseConnectionError(f"資料庫連線錯誤: {err}")
 
-
 mysql_pool = MySQLPool()

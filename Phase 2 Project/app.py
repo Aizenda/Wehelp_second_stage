@@ -9,7 +9,6 @@ app.include_router(attractions.router)
 app.include_router(Login.router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)
 async def index(request: Request):
