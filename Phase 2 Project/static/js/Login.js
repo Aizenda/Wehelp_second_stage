@@ -28,8 +28,9 @@ signinForm.addEventListener("submit", async function (event) {
     });
     
     const result = await response.json();
-		localStorage.setItem("token", result.token);
 
+    localStorage.setItem("token", result.token);
+    
     if (response.ok) {
         signinRequest.classList.add("signin__element__request__show");
         signinRequest.style.color = "green";
@@ -95,7 +96,7 @@ document.addEventListener("DOMContentLoaded",async ()=>{
 	});
 
 	const result  = await res.json()
-	
+    
 	if(!result.data){
 		return;
 	}

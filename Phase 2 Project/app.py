@@ -2,7 +2,7 @@ from fastapi import *
 from fastapi.responses import FileResponse
 from routers import attractions ,	Login
 from fastapi.staticfiles import StaticFiles
-from datetime import datetime, timedelta
+
 
 app=FastAPI()
 app.include_router(attractions.router)
