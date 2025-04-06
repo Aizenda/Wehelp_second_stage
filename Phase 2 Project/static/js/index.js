@@ -1,6 +1,6 @@
 async function fetchMRT() {
 	try {
-		let response = await fetch("http://52.196.225.29:8000/api/mrts");
+		let response = await fetch("/api/mrts");
 		let data = await response.json();
 
 		let mrtTitleContainer = document.querySelector(".mrt__title");
@@ -110,10 +110,9 @@ async function fetchAttractions(keyword = "") {
 		
 		try {
 			
-				let response = await fetch(`http://52.196.225.29:8000/api/attractions?page=${page}&keyword=${keyword}`);
+				let response = await fetch(`/api/attractions?page=${page}&keyword=${keyword}`);
 				const data = await response.json();
 				let attractions = data["data"];
-
 				if (page === 0) {
 						grid.innerHTML = "";
 				}
@@ -160,7 +159,7 @@ function renderAttractions(attractions) {
 				rightText.classList.add("attractions__element__bottom__right");
 
 				const id  = attraction.id
-				attractionsElement.href = `http://52.196.225.29:8000/attraction/${id}`
+				attractionsElement.href = `/attraction/${id}`
 
 				// 組合元素
 				bottomContainer.appendChild(leftText);
@@ -218,20 +217,21 @@ function setupEventListeners() {
 						performSearch();
 				}
 		});
+		
 }
-
 function performSearch() {
-		let keyword = inputKeyword.value.trim();
-		if (keyword) {
-				resetSearch();
-				fetchAttractions(keyword);
-		}
+	let keyword = inputKeyword.value.trim();
+	if (keyword) {
+			resetSearch();
+			fetchAttractions(keyword);
+	}
 }
 
 function resetSearch() {
-		page = 0;
-		hasMoreData = true;
+	page = 0;
+	hasMoreData = true;
 }
+
 
 // 設置事件監聽器
 setupEventListeners();

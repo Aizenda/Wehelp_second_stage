@@ -1,10 +1,10 @@
-<<<<<<< HEAD:week2/static/css/index.css
 body {
 	margin: 0;
 	padding: 0;
   font-family: 'Noto Sans TC';
   font-size: 16px;
 }
+
 
 main {
 	flex-grow:1;
@@ -42,7 +42,13 @@ footer {
   gap:20px
 }
 
-.header__button {
+.header__button__book{
+  all: unset;
+  cursor: pointer;
+  color: #666666;
+}
+
+.header__button__signin {
   all: unset;
   cursor: pointer;
   color: #666666;
@@ -214,274 +220,233 @@ footer {
 	color: #757575;
 }
 
-
-@media screen and (min-width: 601px) and (max-width: 1201px) {
-	.header{
-		width: 90%;
-	}
-
-
-	.search__section__content {
-		width: 90%;
-		height: 169px;
-		margin: auto;
-	}
-
-	.grid {
-		width: 90%;
-		grid-template-columns: repeat(2, 1fr);
-	}
-
-	.mrt__title__container {
-		width: 90%;
-	}
-
+.signin__content{
+  max-width: auto;
+  width: 340px;
+  height: 275px; 
+  background-color: #FFFFFF;
+  margin-top:30px;
+  position: absolute;
+  right: 50%; 
+  transform: translateX(50%);
+  border-radius: 5px;
+  display: none;
+  gap: 10px; 
+  z-index: 1000;
 }
 
-
-@media screen and (min-width: 360px) and (max-width:600px) {
-	.header{
-		width: 90%;
-	}
-
-
-	.search__section__content {
-		width: 90%;
-		height: 169px;
-		margin: auto;
-	}
-
-	.grid {
-    grid-template-columns: repeat(1, 1fr); 
-		width: 90%;
-  }
-
-	.mrt__title__container {
-		width: 90%;
-	}
-
-
-	.search__section {
-		height: 360px;
-		background-image: url(/static/imgs/phone.png);
-	}
+.signin__content__show{
+  display: grid;
+}
  
-=======
-body {
-	margin: 0;
-	padding: 0;
-  font-family: 'Noto Sans TC';
-  font-size: 16px;
+.signin__element__color{
+  height: 10px;
+  width: 100%;
+  background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
+  border-radius: 5px 5px 0 0;
+  margin: 0;
 }
 
-main {
-	flex-grow:1;
-}
-
-footer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: #757575;
-	height: 100px;
-  color: #FFFF;
-}
-
-.header {
+.signin__element__title{
   display: flex;
-  width: 1200px;
-  margin: auto;
-  justify-content: space-between;
+  font-size: 24px;
+  justify-content: center;
   align-items: center;
-  height: 54px;
-}
-
-.header__title {
-  display: flex;
-  font-size: 30px;
-  color: #448899;
   font-weight: 700;
-  align-items: center;
-  height: 34px;
-}
-
-.header__nav {
-  display: flex;
-  gap:20px
-}
-
-.header__button {
-  all: unset;
-  cursor: pointer;
   color: #666666;
 }
 
-.search__section {
-  background-image: url(/static/imgs/hero_section.png);
-  background-size: cover;
-  background-position: center;
-  height: 320px;
+.signin__content__img{
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top:27px;
+  right:17px;
+}
+
+.signin__element__email,
+.signin__element__password{
   width: 100%;
+  height: 100%;
   display: flex;
-  margin-bottom: 40px;
-}
-
-.search__section__content {
-  width: 1200px;
-  height: 169px;
-  margin: auto;
-}
-
-.search__heading__H2{
-  color: #f8f8f8;
-	font-size: 28px;
-  letter-spacing: 2px;
-	width: 100%;
-}
-
-.search__heading__H4 {
-  color: #f8f8f8;
-  letter-spacing: 1px;
-	width: 100%;
-}
-
-.search {
-  display: flex;
+  justify-content: center;
   align-items: center;
-	width: 100%;
+  border: 0;
 }
 
-.search__input {
-  display: flex;
-  padding-top:5px ;
-  color: #757575;
-  font-weight: 700;
-  width: 400px;
-  height: 44px;
-  border-radius: 5px 0 0 5px;
-  border: none;
+.signin__element__email > input,
+.signin__element__password > input{
+  height: 100%;
+  width: 90%;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid #CCCCCC;
+  padding-left: 15px;
+  box-sizing: border-box; 
 }
 
-.search__button {
-  background-color: #448899;
-  height: 46px;
-  width: 60px;
-  border: none;
-  border-radius: 0 5px 5px 0;
-}
-
-.search__button > img {
-  height: 30px;
-  width: 30px;
-  cursor: pointer;
-}
-
-.mrt__title__container {
-  display: flex;
-  width: 1200px;
-  margin: auto auto 40px auto;
-}
-
-.mrt__title {
-  display: flex;
-  gap: 10px;
-	width: 100%;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  white-space: nowrap;
-  scroll-behavior: smooth;
-}
-
-.mrt__title::-webkit-scrollbar {
+.signin__element__request{
   display: none;
 }
 
-.mrt__button {
-  background-color: #FFFF;
-  color: #666666;
-  border: none;
-  cursor: pointer;
-  font-weight: 700;
-  font-size:16px;
-}
-
-.mrt__button:hover{
-  color: #000000;
-}
-
-.arrow--left {
-  left: 0;
-  padding-right: 20px;
-  cursor: pointer;
-}
-
-.arrow--right {
-  right: 0;
-  padding-left: 20px;
-  cursor: pointer;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
-  width: 1200px;
+.signin__element__request__show{
+  display: block;
+  width: 90%;
   margin: auto;
-	margin-bottom: 30px;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 500;
 }
 
-.attractions__element {
-  position: relative;
-  border: 1px solid #E8E8E8;
-	height: 200px;
-  border-radius: 5px;
-}
-
-.attractions__element__image {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 80%;
+.signin__content__buttom{
   width: 100%;
-  border-radius: 5px 5px 0 0;
-}
-
-.attractions__element__name {
-  background-color: rgba(0, 0, 0, 0.6);
-  color:#FFFF;
-  height: 20px;
-	font-weight: 700;
-  padding: 10px;
-  width: calc(100% - 20px);
-  position: absolute;
-  bottom: 20%;
-	white-space: nowrap;      
-  overflow: hidden;         
-  text-overflow: ellipsis; 
-}
-
-.attractions__element__bottom {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 40px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
-.attractions__element__bottom__left {
-  padding-left: 10px;
-  font-weight: 700;
-	color: #757575;
+.signin__content__buttom__style{
+  width: 90%;
+  height: 100%;
+  background-color: #448899;
+  border-radius: 5px;
+  color: #FFFFFF;
+  border: 1px solid #448899;
 }
 
-.attractions__element__bottom__right {
-  padding-right: 10px;
-  font-weight: 700;
-	color: #757575;
+.signin__element__link{
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  color: #666666;
+  cursor: pointer;
 }
 
+.signup__content{
+  max-width: auto;
+  width: 340px;
+  height: 330px; 
+  background-color: #FFFFFF;
+  margin-top:30px;
+  position: absolute;
+  right: 50%; 
+  transform: translateX(50%);
+  border-radius: 5px;
+  display: grid;
+  gap: 10px; 
+  z-index: 1000;
+  display: none;
+}
+ 
+.signup__content__show{
+  display: grid;
+}
+
+.signup__element__color{
+  height: 10px;
+  width: 100%;
+  background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
+  border-radius: 5px 5px 0 0;
+  margin: 0;
+}
+
+.signup__element__title{
+  display: flex;
+  font-size: 24px;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  color: #666666;
+}
+
+.signup__content__img{
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top:27px;
+  right:17px;
+  cursor: pointer;
+}
+
+.signup__element__email,
+.signup__element__password{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+}
+
+.signup__element__email > input,
+.signup__element__password > input{
+  height: 100%;
+  width: 90%;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid #CCCCCC;
+  color: #757575;
+  font-size: 16px;
+  width: 500;
+  padding-left: 15px;
+  box-sizing: border-box; 
+}
+
+.signup__element__request{
+  display: none
+}
+
+.signup__element__request__show{
+  display: block;
+  width: 90%;
+  margin: auto;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.signup__content__buttom{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.signup__content__buttom__style{
+  justify-content: center;
+  width: 90%;
+  height: 100%;
+  background-color: #448899;
+  border-radius: 5px;
+  color: #FFFFFF;
+  border: 1px solid #448899;
+  cursor:pointer;
+}
+
+.signup__element__link{
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  color: #666666;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* 黑色，50%透明度 */
+  z-index: 999;
+  display: none;
+}
+
+.modal__overlay__show{
+  display: block;
+}
 
 @media screen and (min-width: 601px) and (max-width: 1201px) {
 	.header{
@@ -537,6 +502,4 @@ footer {
 		height: 360px;
 		background-image: url(/static/imgs/phone.png);
 	}
- 
->>>>>>> develop:Phase 2 Project/static/css/index.css
 }

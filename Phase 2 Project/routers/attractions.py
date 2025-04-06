@@ -30,8 +30,10 @@ async def get_attractions(page: int = Query(0, ge=0), keyword: str = Query(None)
 		# 依據是否有 keyword 來選擇查詢方式
 		if keyword:
 			cursor.execute("""
-			SELECT COUNT(*) AS total_rows FROM attractions 
-			WHERE name LIKE %s OR mrt LIKE %s
+			SELECT COUNT(*) AS total_rows 
+			FROM attractions a
+			LEFT JOIN mrt m ON a.id = m.attraction_id
+			WHERE a.name LIKE %s OR m.mrt LIKE %s;
 			""", ('%' + keyword + '%', '%' + keyword + '%'))
 			total_rows = cursor.fetchone()
 
@@ -43,14 +45,18 @@ async def get_attractions(page: int = Query(0, ge=0), keyword: str = Query(None)
 				return JSONResponse({"error": True, "message": "超過最大頁數"}, status_code=400)
 
 			select_query = """
-				SELECT id, name, category, description, address, transport, mrt, lat, lng, images FROM attractions 
-				WHERE name LIKE %s OR mrt LIKE %s
-				LIMIT 12 OFFSET %s
-			"""
+				SELECT a.id, a.name, a.category, a.description, a.address, a.transport, m.mrt, a.lat, a.lng, a.images
+				FROM attractions a
+				LEFT JOIN mrt m ON a.id = m.attraction_id
+				WHERE a.name LIKE %s OR m.mrt LIKE %s
+				LIMIT 12 OFFSET %s;
+				"""
 			cursor.execute(select_query, ('%' + keyword + '%', '%' + keyword + '%', limit_data))
 		else:
 			select_query = """
-				SELECT id, name, category, description, address, transport, mrt, lat, lng, images FROM attractions 
+				SELECT a.id, a.name, a.category, a.description, a.address, a.transport, m.mrt, a.lat, a.lng, a.images
+				FROM attractions a
+				LEFT JOIN mrt m ON a.id = m.attraction_id
 				LIMIT 12 OFFSET %s
 			"""
 			cursor.execute(select_query, (limit_data,))
@@ -89,9 +95,10 @@ async def get_attraction_by_id(id: int = Path(..., ge=1)):
 
 			# 執行 SQL 查詢
 		query = """
-				SELECT id, name, category, description, address, transport, mrt, lat, lng, images 
-				FROM attractions 
-				WHERE id = %s
+				SELECT a.id, a.name, a.category, a.description, a.address, a.transport, m.mrt, a.lat, a.lng, a.images
+				FROM attractions a
+				LEFT JOIN mrt m ON a.id = m.attraction_id
+				WHERE a.id = %s
 		"""
 		cursor.execute(query, (id,))
 		result = cursor.fetchone()
@@ -124,9 +131,10 @@ async def get_mrt_attractions():
 
 		# 查詢每個捷運站的景點數量並按數量排序
 		cursor.execute("""
-				SELECT mrt, COUNT(*) AS attraction_count
-				FROM attractions
-				GROUP BY mrt
+				SELECT m.mrt, COUNT(a.id) AS attraction_count
+				FROM mrt m
+				JOIN attractions a ON m.attraction_id = a.id
+				GROUP BY m.mrt
 				ORDER BY attraction_count DESC;
 		""")
 		
