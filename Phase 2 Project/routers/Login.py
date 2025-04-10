@@ -31,7 +31,6 @@ def check_password(stored_hash: str, password: str) -> bool:
 
 @router.post("/api/user")
 async def register(request: RegisterRequest):
-	print(request)
 	name = request.name
 	email = request.email
 	password = request.password

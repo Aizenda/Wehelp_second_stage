@@ -1,15 +1,3 @@
-// 1. 首頁返回功能
-function homepage(className) {
-	const button = document.querySelector(`.${className}`);
-	if (button) {
-			button.addEventListener("click", () => {
-					window.location.href = "/";
-			});
-	} else {
-			console.error(`Element with class "${className}" not found.`);
-	}
-}
-homepage("header__title");
 
 // 2. URL 和 ID 處理
 const URL = window.location.pathname.split("/");

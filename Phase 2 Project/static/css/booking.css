@@ -1,0 +1,163 @@
+body {
+	margin: 0;
+	padding: 0;
+  font-family: 'Noto Sans TC';
+  font-size: 16px;
+  position: relative;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  width: 1200px;
+  margin: auto;
+  justify-content: space-between;
+  align-items: center;
+  height: 54px;
+}
+
+.header__title {
+  display: flex;
+  font-size: 30px;
+  color: #448899;
+  font-weight: 700;
+  align-items: center;
+  height: 34px;
+  cursor:pointer;
+}
+
+.header__nav {
+  display: flex;
+  gap:20px
+}
+
+.header__button--book{
+  all: unset;
+  cursor: pointer;
+  color: #666666;
+}
+
+.header__button--signin {
+  all: unset;
+  cursor: pointer;
+  color: #666666;
+}
+
+.header__separator{
+  border: 1px solid #E8E8E8;
+  width: 100%; 
+  margin: 0;
+  margin-bottom: 40px;
+}
+
+main {
+	flex-grow:1;
+  margin: auto;
+  margin-bottom: 40px;
+}
+
+.booking{
+  width: 1200px;
+}
+
+.booking__title{
+  width: 90%;
+  color: #666666;
+  font-weight: 700;
+  font-size: 19px;
+  margin-bottom: 30px;
+}
+
+.booking__container{
+  width: 90%;
+  display: grid;
+  gap:30px;
+  color: #666666;
+  font-weight: 400;
+  grid-template-columns: 30% 70%;
+  margin-bottom: 40px;
+}
+
+.booking__container__img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.booking__container__grid{
+  display: grid;
+  grid-template-rows: repeat(5 ,1fr);
+  position: relative;
+}
+
+.booking__container__attractionName{
+  display: flex;
+  font-weight: 700;
+  color: #448899;
+  align-items: center;
+  gap: 4px;
+}
+
+.booking__container__other{
+  display: flex;
+  font-weight: 700;
+  align-items: center;
+  color: #666666;
+  gap: 4px;
+}
+
+.booking__container__element{
+  font-weight: 400;
+}
+
+.booking__container__delete{
+  position: absolute;
+  right: 0;
+  top:10px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.booking__separator,
+.booking__contact-separator,
+.booking__payment-separator{
+  border: 1px solid #E8E8E8;
+  width: 100%; 
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  display: none;
+}
+
+.footer__container{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #757575;
+	height: 75vh;
+  color: #FFFF;
+}
+
+.booking__contact-form{
+  display: grid;
+  gap: 15px;
+  color: #666666;
+  font-weight: 400;
+  margin-bottom: 40px;
+}
+
+.booking__contact__element{
+  display: flex;
+  gap: 5px;
+}
+
+input{
+  border: 1px solid #E8E8E8; 
+  width: 200px;
+  height: 30px;
+  padding-left: 10px;
+}

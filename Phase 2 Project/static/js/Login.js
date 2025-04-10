@@ -1,4 +1,4 @@
-const signinButton = document.querySelector(".header__button__signin");
+const signinButton = document.querySelector(".header__button--signin");
 const signup = document.querySelector(".signup__content");
 const overlay = document.querySelector(".modal__overlay");
 const signinForm = document.querySelector("#signinForm");
@@ -97,10 +97,12 @@ document.addEventListener("DOMContentLoaded",async ()=>{
 	});
 
 	const result  = await res.json()
-
 	if(!result.data){
 		return;
 	}
+    
+    localStorage.setItem("name" ,result.data.name)
+    localStorage.setItem("email" ,result.data.email)
 	
 	signoutButtom.textContent = "登出";
 	signinButton.id = "statusUpdate";
@@ -109,6 +111,7 @@ document.addEventListener("DOMContentLoaded",async ()=>{
 	const signout_buttom = document.querySelector("#statusUpdate")
 	signout_buttom.addEventListener("click", ()=>{
 	localStorage.removeItem("token");
+    localStorage.removeItem("name");
 	signout_buttom.id = "signin"
 	signinForm.classList.remove("signin__content__show");
 	overlay.classList.remove("modal__overlay__show");
@@ -143,3 +146,15 @@ signupLink.addEventListener("click", () => {
     signinForm.classList.remove("signin__content__show");
     signup.classList.add("signup__content__show");
 });
+
+function homepage(className) {
+	const button = document.querySelector(`.${className}`);
+	if (button) {
+			button.addEventListener("click", () => {
+					window.location.href = "/";
+			});
+	} else {
+			console.error(`Element with class "${className}" not found.`);
+	}
+}
+homepage("header__title");
