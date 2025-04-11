@@ -1,4 +1,3 @@
-
 // 2. URL 和 ID 處理
 const URL = window.location.pathname.split("/");
 const id  = URL[URL.length - 1];
