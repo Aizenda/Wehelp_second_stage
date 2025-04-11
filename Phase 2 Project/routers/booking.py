@@ -90,6 +90,11 @@ async def post_booking(request:Request):
 		price = req.get("price")
 		token = req.get("token")
 
+		if time == "上半天":
+			time = "早上 9 點到下午 4 點"
+		else:
+			time = "下午 2 點到晚上 9 點"
+			
 		if not token:
 			return JSONResponse({"error":True} ,status_code=403)
 

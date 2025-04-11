@@ -1,8 +1,14 @@
+html {
+  height: 100vh;
+  
+}
+
 body {
 	margin: 0;
 	padding: 0;
   font-family: 'Noto Sans TC';
   font-size: 16px;
+  
 }
 
 main{
@@ -297,6 +303,7 @@ input[type="radio"]:checked {
   
   main{
     width: 100%;
+    height: 100%;
   }
 
   .main__grid{
@@ -347,7 +354,7 @@ input[type="radio"]:checked {
   
   main{
     width: 100%;
-    height: 100px;
+    height: 100%;
   }
 
   .main__grid{
@@ -371,8 +378,7 @@ input[type="radio"]:checked {
   }
 
   footer{
-    position: static;
-    height:90vh;
+    height:100px;
   }
 
   .header__hr{
@@ -382,10 +388,6 @@ input[type="radio"]:checked {
   .main__hr{
     width: 90%; 
     margin: auto;
-  }
-
-  .booking__pay{
-    display: none;
   }
   
 }

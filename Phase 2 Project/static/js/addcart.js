@@ -350,6 +350,9 @@ let bookingView = {
   dataNotExists(){
     this.bookingElement.bookingContainer.classList.add('booking__title');
     this.bookingElement.bookingContainer.textContent = '目前沒有任何待預訂的行程';
+    this.bookingElement.footer.style.height = '80vh';
+    this.bookingElement.main.style.height = 'auto';
+    this.bookingElement.bookingPay.style.height = '0px'
   },
 
 };
