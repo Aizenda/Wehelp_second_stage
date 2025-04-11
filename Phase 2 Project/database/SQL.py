@@ -42,7 +42,7 @@ def create_user_table(cursor):
 
 def create_cart_table(cursor):
     create_table_query = """
-    CREATE TABLE shopping_cart (
+    CREATE TABLE IF NOT EXISTS shopping_cart (
     id INT AUTO_INCREMENT PRIMARY KEY,
     date DATE NOT NULL,
     time VARCHAR(25) NOT NULL,
@@ -133,8 +133,8 @@ if __name__ == "__main__":
     data = load_attractions_data(target_folder)
 
     # 插入資料
-    # insert_attractions_data(cursor, data)
-    # insert_mrt_table(cursor, data)
+    insert_attractions_data(cursor, data)
+    insert_mrt_table(cursor, data)
     
     # 提交變更並關閉連接
     conn.commit()

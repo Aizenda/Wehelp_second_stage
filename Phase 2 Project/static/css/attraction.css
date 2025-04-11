@@ -346,7 +346,8 @@ input[type="radio"]:checked {
   }
   
   main{
-    width: 100vw;
+    width: 100%;
+    height: 100px;
   }
 
   .main__grid{
@@ -371,6 +372,7 @@ input[type="radio"]:checked {
 
   footer{
     position: static;
+    height:90vh;
   }
 
   .header__hr{
@@ -380,6 +382,10 @@ input[type="radio"]:checked {
   .main__hr{
     width: 90%; 
     margin: auto;
+  }
+
+  .booking__pay{
+    display: none;
   }
   
 }
