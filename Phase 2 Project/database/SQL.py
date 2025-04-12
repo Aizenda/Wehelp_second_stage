@@ -40,6 +40,22 @@ def create_user_table(cursor):
     """
     cursor.execute(create_table_query)
 
+def create_cart_table(cursor):
+    create_table_query = """
+    CREATE TABLE IF NOT EXISTS shopping_cart (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL,
+    time VARCHAR(25) NOT NULL,
+    price INT NOT NULL,
+    attractionId INT NOT NULL,
+    userId INT NOT NULL,
+    FOREIGN KEY (attractionId) REFERENCES attractions(id),
+    FOREIGN KEY (userId) REFERENCES user(id),
+    UNIQUE (userId)
+    );
+    """
+    cursor.execute(create_table_query)
+
 # 讀取 JSON 資料
 def load_attractions_data(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
@@ -95,6 +111,8 @@ def insert_mrt_table(cursor, data):
     """
     cursor.executemany(insert_query, mrt_data)
 
+
+
 ## 主要執行區域
 if __name__ == "__main__":
     # 使用 MySQL 連線池來獲取資料庫連線
@@ -105,6 +123,7 @@ if __name__ == "__main__":
     create_attractions_table(cursor)
     create_mtr_table(cursor)
     create_user_table(cursor)
+    create_cart_table(cursor)
 
     # 讀取資料
     current_folder = os.path.dirname(os.path.abspath(__file__))

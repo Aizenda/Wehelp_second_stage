@@ -100,7 +100,7 @@ function homePage(className) {
 					console.error(`Element with class "${className}" not found.`);
 			}
 	}
-	homePage("header__title");
+homePage("header__title");
 
 async function fetchAttractions(keyword = "") {
 		// 避免重複請求或已無資料可載入
