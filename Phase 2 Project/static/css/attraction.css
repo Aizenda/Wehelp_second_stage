@@ -63,6 +63,7 @@ button{
   font-weight: 700;
   align-items: center;
   height: 34px;
+  cursor: pointer;
 }
 
 .header__nav {
