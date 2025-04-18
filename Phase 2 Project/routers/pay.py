@@ -69,7 +69,7 @@ async def pay(request:Request):
 			res = await client.post(url,json=tappay_request,headers=headers)
 			res = res.json()
 			status = res.get("status")
-
+			print(res)
 		if status != 0 :
 			pay_query = """
 			INSERT INTO payment_status (status)
@@ -127,9 +127,11 @@ async def pay(request:Request):
 		})
 
 	except  jwt.ExpiredSignatureError:
+		print(e)
 		return JSONResponse({"error": True}, status_code=401)
 	
 	except jwt.InvalidTokenError:
+		print(e)
 		return JSONResponse({"error": True}, status_code=401)
 	
 	except Error as e:
