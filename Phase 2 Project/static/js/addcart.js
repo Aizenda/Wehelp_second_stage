@@ -298,69 +298,7 @@ let bookingView = {
     
 
     // 信用卡
-    // let cardNumber = document.createElement('div');
-    // cardNumber.id = 'card-number';
-    // let cardTime = document.createElement('div');
-    // cardTime.id = 'card-expiration-date';
-    // let cardVerification = document.createElement('div');
-    // cardVerification.id='card-ccv';
-  
-    // bookingView.bookingElement.bookingPaymentForm.appendChild(cardNumber);
-    // bookingView.bookingElement.bookingPaymentForm.appendChild(cardTime);
-    // bookingView.bookingElement.bookingPaymentForm.appendChild(cardVerification);
-
-    // cardNumber.classList.add('booking__contact__element');
-    // cardTime.classList.add('booking__contact__element');
-    // cardVerification.classList.add('booking__contact__element');
-
-    // cardNumber.textContent = '卡片號碼 : ';
-    // cardTime.textContent = '過期時間 :';
-    // cardVerification.textContent = '驗證密碼 :';
-
-    // let numberInput = document.createElement('input');
-    // let timeInput = document.createElement('input');
-    // let verificationInput = document.createElement('input');
-    
-    // numberInput.id ='card-number';
-    // numberInput.type = 'tel';
-    // numberInput.pattern = '[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}';
-    // numberInput.placeholder = '**** **** **** ****';
-    // numberInput.maxLength = 16;
-    
-    // timeInput.id='card-expiration-date';
-    // timeInput.type = 'text';
-    // timeInput.placeholder = 'MM / YY';
-    // timeInput.maxLength = 4;
-
-    // verificationInput.id='card-ccv';
-    // verificationInput.type = 'text';
-    // verificationInput.placeholder = 'CVV';
-    // verificationInput.maxLength = 3;
-
-    // timeInput.style.color = '#757575'
-    // verificationInput.style.color = '#757575'
-    // numberInput.style.color = '#757575'
-
-    // cardNumber.appendChild(numberInput);
-    // cardTime.appendChild(timeInput);
-    // cardVerification.appendChild(verificationInput);
-
-    // this.bookingElement.bookingPaymentTitle.classList.add('booking__title');
-    // this.bookingElement.bookingPaymentForm.classList.add('booking__contact-form')
-    // this.bookingElement.bookingPaymentSeparator.style.display = 'block';
-
-    //按鈕
-    // let payTitle = document.createElement('div');
-    // let payButton = document.createElement('button');
-
-    // payTitle.classList.add('booking__pay__title');
     bookingView.bookingElement.payTitle.textContent = `總價 : 新台幣 ${price}`
-    // payButton.classList.add('booking__pay__button');
-    // payButton.textContent = '確認並付款'
-    // payButton.setAttribute('disabled', true);
-    // this.bookingElement.bookingPay.appendChild(payTitle);
-    // this.bookingElement.bookingPay.appendChild(payButton);
-    
   },
 
   dataNotExists(){
@@ -403,7 +341,7 @@ let bookingController = {
       let price = data.data.price
       let time = data.data.time
       bookingView.dataExists(attraction, date, price, time);
-    };0
+    };
   },
 
 	deleteData(token) {
@@ -411,8 +349,6 @@ let bookingController = {
   }
 
 };
-
-
 
 document.addEventListener('DOMContentLoaded', function() {
 

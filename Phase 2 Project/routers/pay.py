@@ -2,7 +2,7 @@ from fastapi import *
 from fastapi.responses import JSONResponse
 from database.DB import mysql_pool
 from mysql.connector.errors import IntegrityError, Error
-import jwt,os,random,string,httpx
+import jwt,os,random,string,httpx,json
 from datetime import datetime
 
 router = APIRouter()
@@ -29,7 +29,6 @@ async def pay(request:Request):
 	
 	try:
 		decode_token = jwt.decode(token, key, algorithms="HS256")
-		print(decode_token)
 		userId = decode_token.get("data").get("id")
 		prime = body.get("prime")
 		price = body.get("order").get("price")
@@ -41,9 +40,6 @@ async def pay(request:Request):
 		details = "taipeidaytrip_tour"
 		order_number = generate_bank_transaction_id(25)
 		attraction_id = int(body.get("order").get("trip").get("attraction").get("id"))
-		attraction_name = body.get("order").get("trip").get("attraction").get("name")
-		attraction_address = body.get("order").get("trip").get("attraction").get("address")
-		attraction_image = body.get("order").get("trip").get("attraction").get("image")
 		date = body.get("order").get("trip").get("date")
 		time = body.get("order").get("trip").get("time")
 
@@ -75,19 +71,36 @@ async def pay(request:Request):
 			status = res.get("status")
 
 		if status != 0 :
+			pay_query = """
+			INSERT INTO payment_status (status)
+			VALUES (%s)
+			;
+			"""
+			cursor.execute(pay_query, (status,))
+			payment_id = cursor.lastrowid
+			conn.commit()
 			return JSONResponse({'error':True, "message": "付款失敗：" + res.get("msg", "")} , status_code= 400)
 		
 		pay_time = res.get("transaction_time_millis")
 		pay_time = datetime.fromtimestamp(pay_time / 1000)
 		pay_time = pay_time.strftime("%Y-%m-%d %H:%M:%S")
-
+		
 		pay_query = """
 		INSERT INTO payment_status (pay_time,status)
 		VALUES (%s,%s)
 		;
 		"""
 		cursor.execute(pay_query, (pay_time, status))
-		payment_id = cursor.lastrowid  # 拿到剛插入的 payment_status.id
+		payment_id = cursor.lastrowid
+		conn.commit()
+
+		update_phone_query = """
+		UPDATE user
+		SET phone = %s
+		WHERE id = %s
+		;
+		"""
+		cursor.execute(update_phone_query, (phone, userId))
 		conn.commit()
 
 		orders_query = """
@@ -126,7 +139,70 @@ async def pay(request:Request):
 		return JSONResponse({"error":True, "message":"伺服器內部錯誤"} ,status_code=500)
 	
 	finally:
-		pass
+		cursor.close()
+		conn.close()
 
+@router.get("/api/order/{orderNumber}")
+async def get_order_number(orderNumber):
+    conn = mysql_pool.get_connection()
+    cursor = conn.cursor(dictionary=True)
+    try:
+        query = """
+        SELECT 
+        o.order_number,
+        o.date,
+        o.time,
+        o.price,
+        u.name AS user_name,
+        u.email AS user_email,
+        u.phone AS user_phone,
+        a.id AS attraction_id,
+        a.name AS attraction_name,
+        a.address AS attraction_address,
+        a.images AS attraction_images,
+        p.status AS payment_status,
+        p.pay_time
+        FROM orders o
+        JOIN user u ON o.userId = u.id
+        JOIN attractions a ON o.attractionId = a.id
+        JOIN payment_status p ON o.paymentId = p.id
+        WHERE o.order_number = %s
+        AND p.status = %s;
+        """
+        cursor.execute(query, (orderNumber, 0))
 
-	
+        result = cursor.fetchone()
+        data = {
+			"data": {
+				"number": result['order_number'],
+				"price": result['price'],
+				"trip": {
+					"attraction": {
+						"id": result['attraction_id'],
+						"name": result['attraction_name'],
+						"address": result['attraction_address'],
+						"image": result['attraction_images'].split(',')[0].strip('"')
+					},
+					"date": str(result['date']),
+					"time": 'afternoon' if result['time'] == '下半天' else 'morning'  # 假設 '下半天' 對應 'afternoon'
+				},
+				"contact": {
+					"name": result['user_name'].strip(),
+					"email": result['user_email'],
+					"phone": result['user_phone']
+				},
+				"status": result['payment_status']
+				}
+			}
+        return JSONResponse({
+                "data": data
+            })
+    except Error as e:
+        return JSONResponse({"error": True, "message": f"資料庫錯誤: {str(e)}"}, status_code=500)
+
+    except Exception as e:
+        return JSONResponse({"error": True, "message": "伺服器內部錯誤"}, status_code=500)
+
+    finally:
+        conn.close()
+        cursor.close()

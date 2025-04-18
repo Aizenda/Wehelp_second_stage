@@ -55,11 +55,12 @@ def create_cart_table(cursor):
     );
     """
     cursor.execute(create_table_query)
+
 def create_pay(cursor):
     create_table_query = """
     CREATE TABLE IF NOT EXISTS payment_status (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    pay_time DATETIME NOT NULL,
+    pay_time DATETIME,
     status INT NOT NULL
     );
     """
@@ -83,7 +84,12 @@ def create_orders(cursor):
     """
     cursor.execute(create_table_query)
 
-
+def alter_user_table_add_phone(cursor):
+    alter_query = """
+    ALTER TABLE user
+    ADD COLUMN phone VARCHAR(20);
+    """
+    cursor.execute(alter_query)
     
 # 讀取 JSON 資料
 def load_attractions_data(file_path):
@@ -155,6 +161,7 @@ if __name__ == "__main__":
     create_cart_table(cursor)
     create_pay(cursor)
     create_orders(cursor)
+    # alter_user_table_add_phone(cursor)
 
     # 讀取資料
     current_folder = os.path.dirname(os.path.abspath(__file__))
