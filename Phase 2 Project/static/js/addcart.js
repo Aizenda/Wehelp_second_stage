@@ -37,7 +37,6 @@ let addCartView = {
   },
 
   bindBookingButton() { 
-    if (!this.addCartElement.bookingButton) return;
     this.addCartElement.bookingButton.addEventListener('click', () => { 
       const signinButton = document.querySelector('#signinForm'); 
       const modalOverlay = document.querySelector('.modal__overlay'); 
