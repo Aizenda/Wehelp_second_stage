@@ -161,7 +161,7 @@ if __name__ == "__main__":
     create_cart_table(cursor)
     create_pay(cursor)
     create_orders(cursor)
-    # alter_user_table_add_phone(cursor)
+    alter_user_table_add_phone(cursor)
 
     # 讀取資料
     current_folder = os.path.dirname(os.path.abspath(__file__))

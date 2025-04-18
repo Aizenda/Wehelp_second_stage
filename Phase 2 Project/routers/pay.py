@@ -81,10 +81,10 @@ async def pay(request:Request):
 			conn.commit()
 			return JSONResponse({'error':True, "message": "付款失敗：" + res.get("msg", "")} , status_code= 400)
 		
-		pay_time = res.get("transaction_time_millis")
+		pay_time = int(res.get("transaction_time_millis"))
 		pay_time = datetime.fromtimestamp(pay_time / 1000)
 		pay_time = pay_time.strftime("%Y-%m-%d %H:%M:%S")
-		
+
 		pay_query = """
 		INSERT INTO payment_status (pay_time,status)
 		VALUES (%s,%s)
@@ -126,12 +126,10 @@ async def pay(request:Request):
 			}
 		})
 
-	except  jwt.ExpiredSignatureError:
-		print(e)
+	except  jwt.ExpiredSignatureError as e:
 		return JSONResponse({"error": True}, status_code=401)
 	
-	except jwt.InvalidTokenError:
-		print(e)
+	except jwt.InvalidTokenError as e:
 		return JSONResponse({"error": True}, status_code=401)
 	
 	except Error as e:
