@@ -1,5 +1,6 @@
 let addCartModel = { 
   async createNewCart(attractionId, date, time, price, token) { 
+
     const instertResponse = await fetch('/api/booking', { 
       method: 'POST', 
       headers: { 
@@ -36,7 +37,6 @@ let addCartView = {
   },
 
   bindBookingButton() { 
-    if (!this.addCartElement.bookingButton) return;
     this.addCartElement.bookingButton.addEventListener('click', () => { 
       const signinButton = document.querySelector('#signinForm'); 
       const modalOverlay = document.querySelector('.modal__overlay'); 
@@ -85,7 +85,6 @@ let addCartView = {
 
 let addCartController = { 
   init() {
-    
     addCartView.addCartElement.cart.addEventListener('submit', (e) => { 
       e.preventDefault(); 
       const addCartElement = { 
@@ -96,6 +95,7 @@ let addCartController = {
         token: localStorage.getItem("token") ? localStorage.getItem("token") : null 
       }; 
       this.gateData(addCartElement); 
+      localStorage.setItem('attractionId',addCartElement.attractionId);
     }); 
   }, 
 
@@ -149,14 +149,13 @@ let bookingModel = {
 let bookingView = {
   init(){
     this.bookingElement.bookingTitle.textContent = `你好，${this.bookingElement.username}，待預定行程如下 :`;
-    
    },
 	bookingElement :{
     main : document.querySelector('#booking'),
 
     //預定區塊
 		bookingTitle : document.querySelector('.booking__title'),
-    username : localStorage.getItem('name'),
+    username : localStorage.getItem('Name'),
     bookingContainer : document.querySelector('.booking__container'),
     bookingSeparator : document.querySelector('.booking__separator'),
     delete : document.querySelector('.booking__container__delete'),
@@ -174,6 +173,8 @@ let bookingView = {
     //按鈕 
     bookingPay : document.querySelector('.booking__pay'),
     bookingPaymentSeparator : document.querySelector('.booking__payment-separator'),
+    bookingPayContainer : document.querySelector('#booking_pay-container'),
+    payTitle : document.querySelector('.booking__pay__title'),
 
     footer : document.querySelector('.footer__container'),
 	},
@@ -233,12 +234,19 @@ let bookingView = {
 
     attractionNameElenent.textContent = attraction.name;
     bookingDateElenent.textContent =  date;
-    bookingDateElenent.classList.add('booking__container__element');
     bookingTimeElenent.textContent = time;
-    bookingTimeElenent.classList.add('booking__container__element');
     bookingPriceElenent.textContent = `新台幣 ${price}`;
-    bookingPriceElenent.classList.add('booking__container__element');
     bookingaddElenent.textContent = attraction.address;
+
+    attractionNameElenent.id = 'attractionName';
+    bookingDateElenent.id = 'date';
+    bookingTimeElenent.id = 'time';
+    bookingPriceElenent.id = 'price';
+    bookingaddElenent.id = 'attractionAddress';
+
+    bookingDateElenent.classList.add('booking__container__element');
+    bookingTimeElenent.classList.add('booking__container__element');
+    bookingPriceElenent.classList.add('booking__container__element');
     bookingaddElenent.classList.add('booking__container__element')
     
     this.bookingElement.bookingContainer.appendChild(containerImg);
@@ -274,13 +282,13 @@ let bookingView = {
     nameInput.type = 'text';
     emailInput.type = 'email';
     phoneInput.type = 'tel';
-    phoneInput.pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}';
-
+    phoneInput.pattern='[0-9]{3}[0-9]{3}[0-9]{4}';
+    phoneInput.required=true;
     contactName.appendChild(nameInput);
     contactEmail.appendChild(emailInput);
     contactPhone.appendChild(phoneInput);
 
-    nameInput.value = localStorage.getItem('name')
+    nameInput.value = localStorage.getItem('Name')
     emailInput.value = localStorage.getItem('email');
 
     this.bookingElement.contactTitle.textContent = '您的聯絡資訊';
@@ -288,63 +296,8 @@ let bookingView = {
     this.bookingElement.bookingContactSeparator.style.display = 'block';
     
 
-    //信用卡
-    let cardNumber = document.createElement('div');
-    let cardTime = document.createElement('div');
-    let cardVerification = document.createElement('div');
-  
-    bookingView.bookingElement.bookingPaymentForm.appendChild(cardNumber);
-    bookingView.bookingElement.bookingPaymentForm.appendChild(cardTime);
-    bookingView.bookingElement.bookingPaymentForm.appendChild(cardVerification);
-
-    cardNumber.classList.add('booking__contact__element');
-    cardTime.classList.add('booking__contact__element');
-    cardVerification.classList.add('booking__contact__element');
-
-    cardNumber.textContent = '卡片號碼 : ';
-    cardTime.textContent = '過期時間 :';
-    cardVerification.textContent = '驗證密碼 :';
-
-    let numberInput = document.createElement('input');
-    let timeInput = document.createElement('input');
-    let verificationInput = document.createElement('input');
-    
-    numberInput.type = 'tel';
-    numberInput.pattern = '[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}';
-    numberInput.placeholder = '**** **** **** ****';
-    numberInput.maxLength = 19;
-    
-    timeInput.type = 'text';
-    timeInput.placeholder = 'MM / YY';
-    timeInput.maxLength = 7;
-
-    verificationInput.type = 'text';
-    verificationInput.placeholder = 'CVV';
-    verificationInput.maxLength = 4;
-
-    timeInput.style.color = '#757575'
-    verificationInput.style.color = '#757575'
-    numberInput.style.color = '#757575'
-
-    cardNumber.appendChild(numberInput);
-    cardTime.appendChild(timeInput);
-    cardVerification.appendChild(verificationInput);
-
-    this.bookingElement.bookingPaymentTitle.classList.add('booking__title');
-    this.bookingElement.bookingPaymentForm.classList.add('booking__contact-form')
-    this.bookingElement.bookingPaymentSeparator.style.display = 'block';
-
-    //按鈕
-    let payTitle = document.createElement('div');
-    let payButton = document.createElement('button');
-
-    payTitle.classList.add('booking__pay__title');
-    payTitle.textContent = `總價 : 新台幣 ${price}`
-    payButton.classList.add('booking__pay__button');
-    payButton.textContent = '確認並付款'
-    this.bookingElement.bookingPay.appendChild(payTitle);
-    this.bookingElement.bookingPay.appendChild(payButton);
-    
+    // 信用卡
+    bookingView.bookingElement.payTitle.textContent = `總價 : 新台幣 ${price}`
   },
 
   dataNotExists(){
@@ -352,7 +305,9 @@ let bookingView = {
     this.bookingElement.bookingContainer.textContent = '目前沒有任何待預訂的行程';
     this.bookingElement.footer.style.height = '80vh';
     this.bookingElement.main.style.height = 'auto';
-    this.bookingElement.bookingPay.style.height = '0px'
+    this.bookingElement.bookingPay.style.height = '0px';
+    this.bookingElement.bookingPaymentForm.style.display = 'none';
+    this.bookingElement.bookingPayContainer.style.display = 'none';
   },
 
 };
@@ -367,6 +322,7 @@ let bookingController = {
       return;
 		}
 		this.getData(bookingElement.token);
+    
 	},
 
 	async getData(token) {
@@ -393,8 +349,6 @@ let bookingController = {
 
 };
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
 
 	addCartView.init();
@@ -409,4 +363,3 @@ document.addEventListener('DOMContentLoaded', function() {
 		bookingController.init();
 	}	
 });
-

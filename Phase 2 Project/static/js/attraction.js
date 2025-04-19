@@ -1,162 +1,205 @@
-// 2. URL 和 ID 處理
-const URL = window.location.pathname.split("/");
-const id  = URL[URL.length - 1];
 
-// 3. DOM 元素選取
-const main = document.querySelector("main");
-const spanImg = document.querySelector(".attraction__element__image");
-const dot = document.querySelector(".attraction__element__dots")
-const spanName = document.querySelector(".order__element__name");
-const spanCategory = document.querySelector(".order__element__category");
-const spanOrder = document.querySelector(".order__element");
-const introduce = document.querySelector(".describe__element__introduce");
-const address = document.querySelector(".describe__element__address");
-const transportation = document.querySelector(".describe__element__transportation");
+const AttractionModel = {
+	async getAttractionData(id) {
+			const attraction_url = `/api/attraction/${id}`;
+			const attraction_response = await fetch(attraction_url);
+			const response_data = await attraction_response.json();
 
-// 4. 時間選擇price更新
-const radios  = document.querySelectorAll("input[name='time']");
-const priceSpan  = document.querySelector("#price");
-radios.forEach(radio => {
-	radio.addEventListener("change", function () {
-			priceSpan.textContent = this.value;
-	});
-});
+			if (!attraction_response.ok) {
+					return { error: true, message: response_data.message };
+			}
 
-// 5. 景點數據獲取和渲染
-async function getAttractionData(id) {
-	const attraction_url = `/api/attraction/${id}`;
-	const attraction_response = await fetch(attraction_url);
-	const response_data = await attraction_response.json();
-
-	if (!attraction_response.ok) {
-			showError(response_data.message);
-			return null;
+			return { error: false, data: response_data.data };
 	}
+};
 
-	return response_data.data;
-}
+const AttractionView = {
+	elements: {
+			main: document.querySelector("main"),
+			spanImg: document.querySelector(".attraction__element__image"),
+			dot: document.querySelector(".attraction__element__dots"),
+			spanName: document.querySelector(".order__element__name"),
+			spanCategory: document.querySelector(".order__element__category"),
+			spanOrder: document.querySelector(".order__element"),
+			introduce: document.querySelector(".describe__element__introduce"),
+			address: document.querySelector(".describe__element__address"),
+			transportation: document.querySelector(".describe__element__transportation"),
+			radios: document.querySelectorAll("input[name='time']"),
+			priceSpan: document.querySelector("#price"),
+			rightArrow: document.querySelector(".attraction__element__rightArrow"),
+			leftArrow: document.querySelector(".attraction__element__leftArrow")
+	},
 
-function showError(message) {
-	while (main.firstChild) {
-			main.removeChild(main.firstChild);
-	}
-	const err_element = document.createElement("div");
-	err_element.classList.add("err__element");
-	err_element.textContent = `ERROR: ${message}`;
-	main.appendChild(err_element);
-}
+	showError(message) {
+			const main = this.elements.main;
+			while (main.firstChild) {
+					main.removeChild(main.firstChild);
+			}
+			const err_element = document.createElement("div");
+			err_element.classList.add("err__element");
+			err_element.textContent = `ERROR: ${message}`;
+			main.appendChild(err_element);
+	},
 
-function preloadImages(imageUrls, callback) {
-	let loadedCount = 0;
-	const images = [];
+	renderAttractionInfo(data) {
+			this.elements.spanName.textContent = data.name;
+			this.elements.spanCategory.textContent = `${data.category} at ${data.mrt}`;
+			this.elements.introduce.textContent = data.description;
+			this.elements.address.textContent = data.address;
+			this.elements.transportation.textContent = data.transport;
+	},
 
-	imageUrls.forEach((url, index) => {
-			images[index] = new Image();
-			images[index].src = url;
-			images[index].onload = () => {
-					loadedCount++;
-					if (loadedCount === imageUrls.length) {
-							callback();
-					}
-			};
-	});
-}
+	preloadImages(imageUrls, callback) {
+			let loadedCount = 0;
+			const images = [];
 
-function createSlider(images) {
-
-
-	preloadImages(images, () => {
-			images.forEach((imgurl, index) => {
-					const slide = document.createElement("div");
-					slide.classList.add("attraction__element__slide");
-					slide.style.backgroundImage = `url("${imgurl}")`;
-
-					if (index === 0) {
-							slide.style.display = "inline-block";
-					} else {
-							slide.style.display = "none";
-					}
-
-					spanImg.appendChild(slide);
-
-					// 建立點
-					const dots = document.createElement("span");
-					dots.classList.add("attraction__element__dot");
-					if (index === 0) {
-							dots.classList.add("attraction__element__blackDot");
-					}
-
-					dots.addEventListener("click", function () {
-							currentSlide(index + 1);
-					});
-
-					dot.appendChild(dots);
+			imageUrls.forEach((url, index) => {
+					images[index] = new Image();
+					images[index].src = url;
+					images[index].onload = () => {
+							loadedCount++;
+							if (loadedCount === imageUrls.length) {
+									callback();
+							}
+					};
 			});
-	});
-}
+	},
 
-function renderAttractionInfo(data) {
-	spanName.textContent = data.name;
-	spanCategory.textContent = `${data.category} at ${data.mrt}`;
-	introduce.textContent = data.description;
-	address.textContent = data.address;
-	transportation.textContent = data.transport;
-}
+	createSlider(images, controller) {
+			const that = this;
+			this.preloadImages(images, () => {
+					images.forEach((imgurl, index) => {
+							const slide = document.createElement("div");
+							slide.classList.add("attraction__element__slide");
+							slide.style.backgroundImage = `url("${imgurl}")`;
 
-async function getAttraction(id) {
-	const attraction_data = await getAttractionData(id);
-	if (attraction_data) {
-			renderAttractionInfo(attraction_data);
-			createSlider(attraction_data.images);
+							if (index === 0) {
+									slide.style.display = "inline-block";
+							} else {
+									slide.style.display = "none";
+							}
+
+							that.elements.spanImg.appendChild(slide);
+
+							const dots = document.createElement("span");
+							dots.classList.add("attraction__element__dot");
+							if (index === 0) {
+									dots.classList.add("attraction__element__blackDot");
+							}
+
+							dots.addEventListener("click", function () {
+									controller.currentSlide(index + 1);
+							});
+
+							that.elements.dot.appendChild(dots);
+					});
+			});
+	},
+
+	updatePrice() {
+			const radios = this.elements.radios;
+			const priceSpan = this.elements.priceSpan;
+			
+			radios.forEach(radio => {
+					radio.addEventListener("change", function () {
+							priceSpan.textContent = this.value;
+					});
+			});
+	},
+
+	setupArrowButtons(controller) {
+			const rightArrow = this.elements.rightArrow;
+			const leftArrow = this.elements.leftArrow;
+
+			rightArrow.addEventListener("mousedown", () => {
+					rightArrow.src = "/static/imgs/Hovered_right.png";
+			});
+
+			rightArrow.addEventListener("mouseup", () => {
+					rightArrow.src = "/static/imgs/arrow right.png";
+			});
+
+			leftArrow.addEventListener("mousedown", () => {
+					leftArrow.src = "/static/imgs/Hovered_left.png";
+			});
+
+			leftArrow.addEventListener("mouseup", () => {
+					leftArrow.src = "/static/imgs/arrow left.png";
+			});
+
+			
+			rightArrow.addEventListener("click", () => controller.plusDivs(1));
+			leftArrow.addEventListener("click", () => controller.plusDivs(-1));
+	},
+
+	showDivs(n) {
+			const slides = document.querySelectorAll(".attraction__element__slide");
+			const dots = document.querySelectorAll(".attraction__element__dot");
+			
+			let slideIndex = n;
+			
+			if (slideIndex >= slides.length) {
+					slideIndex = 0;
+			}
+			if (slideIndex < 0) {
+					slideIndex = slides.length - 1;
+			}
+
+			for (let i = 0; i < slides.length; i++) {
+					slides[i].style.display = "none";
+			}
+
+			for (let i = 0; i < dots.length; i++) {
+					dots[i].classList.remove("attraction__element__blackDot");
+			}
+
+			slides[slideIndex].style.display = "block";
+			dots[slideIndex].classList.add("attraction__element__blackDot");
+			
+			return slideIndex;
 	}
-}
+};
 
-getAttraction(id);
 
-// 6. 輪播功能
-let slideIndex = 0;
+const AttractionController = {
+	model: AttractionModel,
+	view: AttractionView,
+	slideIndex: 0,
+	attractionId: null,
 
-function plusDivs(n) {
-	showDivs(slideIndex += n);
-}
+	init() {
+			
+			const URL = window.location.pathname.split("/");
+			this.attractionId = URL[URL.length - 1];
+			
+			
+			this.view.updatePrice();
+			
+			
+			this.view.setupArrowButtons(this);
+			
+			
+			this.getAttraction(this.attractionId);
+	},
 
-function currentSlide(n){ 
-	showDivs(slideIndex = n);
-}
+	async getAttraction(id) {
+			const result = await this.model.getAttractionData(id);
+			if (result.error) {
+					this.view.showError(result.message);
+			} else {
+					this.view.renderAttractionInfo(result.data);
+					this.view.createSlider(result.data.images, this);
+			}
+	},
 
-function showDivs(n) {
-	const slides = document.querySelectorAll(".attraction__element__slide");
-	const dots = document.querySelectorAll(".attraction__element__dot")
-	if(n >= slides.length){slideIndex = 0};
-	if(n < 0){slideIndex = slides.length - 1};
+	plusDivs(n) {
+			this.slideIndex = this.view.showDivs(this.slideIndex + n);
+	},
 
-	for (let i = 0; i < slides.length; i++) {
-			slides[i].style.display = "none";
+	currentSlide(n) {
+			this.slideIndex = this.view.showDivs(n - 1);
 	}
+};
 
-	for (i = 0; i < dots.length; i++) {
-			dots[i].classList.remove("attraction__element__blackDot");
-	}
 
-	slides[slideIndex].style.display = "block";
-	dots[slideIndex].classList.add("attraction__element__blackDot");
-}
-
-//7.點擊左右箭頭顏色改變
-const rightArrow = document.querySelector(".attraction__element__rightArrow");
-rightArrow.addEventListener("mousedown", () => {
-	rightArrow.src = "/static/imgs/Hovered_right.png";
-});
-
-rightArrow.addEventListener("mouseup", () => {
-	rightArrow.src = "/static/imgs/arrow right.png";
-});
-
-const leftArrow = document.querySelector(".attraction__element__leftArrow");
-leftArrow.addEventListener("mousedown", () => {
-	leftArrow.src = "/static/imgs/Hovered_left.png";
-});
-
-leftArrow.addEventListener("mouseup", () => {
-	leftArrow.src = "/static/imgs/arrow left.png";
-});
+AttractionController.init();

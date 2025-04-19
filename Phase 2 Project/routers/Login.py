@@ -71,17 +71,17 @@ async def register(request: RegisterRequest):
 
 @router.get("/api/user/auth")
 async def get_member_data(request: Request):
-
 	try:	
 		conn = mysql_pool.get_connection()
 		cursor = conn.cursor()
 		key = os.getenv("JWT_key")
 		
 		token_headers = request.headers.get("Authorization")
-		if not token_headers or not token_headers.startswith("Bearer"):
+
+		if not token_headers:
 				return JSONResponse({"data": None}, status_code=401)
 		
-		token = token_headers.split("Bearer")[1] 
+		token = token_headers.split("Bearer ")[1] 
 		decode_token = jwt.decode(token, key, algorithms="HS256")
 		decode_token_data = decode_token.get("data")
 		

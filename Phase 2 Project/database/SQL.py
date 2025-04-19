@@ -56,6 +56,41 @@ def create_cart_table(cursor):
     """
     cursor.execute(create_table_query)
 
+def create_pay(cursor):
+    create_table_query = """
+    CREATE TABLE IF NOT EXISTS payment_status (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pay_time DATETIME,
+    status INT NOT NULL
+    );
+    """
+    cursor.execute(create_table_query)
+
+def create_orders(cursor):
+    create_table_query = """
+    CREATE TABLE IF NOT EXISTS orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_number VARCHAR(50) NOT NULL UNIQUE,
+    date DATE NOT NULL,
+    time VARCHAR(25) NOT NULL,
+    price INT NOT NULL,
+    attractionId INT NOT NULL,
+    userId INT NOT NULL,
+    paymentId INT NOT NULL,
+    FOREIGN KEY (attractionId) REFERENCES attractions(id),
+    FOREIGN KEY (userId) REFERENCES user(id),
+    FOREIGN KEY (paymentId) REFERENCES payment_status(id)
+    );
+    """
+    cursor.execute(create_table_query)
+
+def alter_user_table_add_phone(cursor):
+    alter_query = """
+    ALTER TABLE user
+    ADD COLUMN phone VARCHAR(20);
+    """
+    cursor.execute(alter_query)
+    
 # 讀取 JSON 資料
 def load_attractions_data(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
@@ -124,17 +159,19 @@ if __name__ == "__main__":
     create_mtr_table(cursor)
     create_user_table(cursor)
     create_cart_table(cursor)
+    create_pay(cursor)
+    create_orders(cursor)
+    alter_user_table_add_phone(cursor)
 
     # 讀取資料
     current_folder = os.path.dirname(os.path.abspath(__file__))
     parent_folder = os.path.dirname(current_folder)
     target_folder = os.path.join(parent_folder, "data", "taipei-attractions.json")
-    print("url:",target_folder)
     data = load_attractions_data(target_folder)
 
     # 插入資料
-    insert_attractions_data(cursor, data)
-    insert_mrt_table(cursor, data)
+    # insert_attractions_data(cursor, data)
+    # insert_mrt_table(cursor, data)
     
     # 提交變更並關閉連接
     conn.commit()
