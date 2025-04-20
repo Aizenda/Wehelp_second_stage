@@ -37,8 +37,6 @@ async def get_attractions(page: int = Query(0, ge=0), keyword: str = Query(None)
 			""", ('%' + keyword + '%', '%' + keyword + '%'))
 			total_rows = cursor.fetchone()
 
-			#刪除無效code
-
 			max_page = total_rows["total_rows"] // page_size
 
 			if page > max_page:

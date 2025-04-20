@@ -40,6 +40,7 @@ async def pay(request:Request):
 		details = "taipeidaytrip_tour"
 		order_number = generate_bank_transaction_id(25)
 		attraction_id = int(body.get("order").get("trip").get("attraction").get("id"))
+		print(attraction_id)
 		date = body.get("order").get("trip").get("date")
 		time = body.get("order").get("trip").get("time")
 
@@ -69,7 +70,6 @@ async def pay(request:Request):
 			res = await client.post(url,json=tappay_request,headers=headers)
 			res = res.json()
 			status = res.get("status")
-			print(res)
 		if status != 0 :
 			pay_query = """
 			INSERT INTO payment_status (status)
@@ -133,9 +133,11 @@ async def pay(request:Request):
 		return JSONResponse({"error": True}, status_code=401)
 	
 	except Error as e:
+		print(e)
 		return JSONResponse({"error": True, "message": f"資料庫錯誤: {str(e)}"} ,status_code=500)
 	
 	except Exception as e:
+		print(e)
 		return JSONResponse({"error":True, "message":"伺服器內部錯誤"} ,status_code=500)
 	
 	finally:

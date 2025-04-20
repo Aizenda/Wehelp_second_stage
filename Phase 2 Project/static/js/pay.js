@@ -79,9 +79,25 @@ const paymentController = {
           ccv: { element: '#card-ccv', placeholder: 'ccv' }
         },
         styles: {
-          'input': { 'color': 'gray' },
-          '.valid': { 'color': 'green' },
-          '.invalid': { 'color': 'red' }
+          'input': {
+              'color': 'orange'
+          },
+          'input.ccv': {
+              'font-size': '16px'
+          },
+          ':focus': {
+          },
+          '.valid': {
+              'color': 'green'
+          },
+          '.invalid': {
+              'color': 'red'
+          },
+          '@media screen and (max-width: 400px)': {
+            'input': {
+                'color': 'orange'
+            }
+          }
         }
       });
   
