@@ -1,6 +1,5 @@
 let addCartModel = { 
   async createNewCart(attractionId, date, time, price, token) { 
-
     const instertResponse = await fetch('/api/booking', { 
       method: 'POST', 
       headers: { 
@@ -25,7 +24,7 @@ let addCartModel = {
 };
 
 let addCartView = { 
-  init() {
+  init(load) {
 
     this.addCartElement = { 
       bookingButton: document.querySelector('.header__button--book'), 
@@ -34,6 +33,18 @@ let addCartView = {
       date: document.querySelector('#date'), 
 			reqDiv: document.querySelector('.signin__element__request')
     };
+    this.load = load;
+  },
+  
+  isTokenExpired(token) {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const exp = payload.exp;
+      return Date.now() >= exp * 1000;
+    } catch (e) {
+      console.error("無效的token格式", e);
+      return true; 
+    }
   },
 
   bindBookingButton() { 
@@ -42,8 +53,11 @@ let addCartView = {
       const modalOverlay = document.querySelector('.modal__overlay'); 
       const token = localStorage.getItem('token'); 
 
-      if (!token) { 
-        signinButton.classList.add('signin__content__show'); 
+      if (!token || this.isTokenExpired(token)) { 
+        signinButton.classList.add('show');
+        setTimeout(()=>{
+          signinButton.classList.add('animate');
+        },50)
         modalOverlay.classList.add('modal__overlay__show'); 
 				addCartView.addCartElement.reqDiv.classList.add('signin__element__request__show')
 				alert('請先登入再進行後續操作，謝謝~')
@@ -60,11 +74,14 @@ let addCartView = {
       const modalOverlay = document.querySelector('.modal__overlay'); 
       const token = localStorage.getItem('token'); 
 
-      if (!token) { 
+      if (!token || this.isTokenExpired(token)) { 
         if (this.addCartElement.date) {
           this.addCartElement.date.removeAttribute('required'); 
         }
-        signinButton.classList.add('signin__content__show'); 
+        signinButton.classList.add('show');
+        setTimeout(()=>{
+          signinButton.classList.add('animate');
+        },50)
         modalOverlay.classList.add('modal__overlay__show'); 
 				addCartView.addCartElement.reqDiv.classList.add('signin__element__request__show')
         return; 
@@ -84,8 +101,10 @@ let addCartView = {
 }
 
 let addCartController = { 
-  init() {
+  init(load) {
+    this.load = load;
     addCartView.addCartElement.cart.addEventListener('submit', (e) => { 
+      this.load.showLoadingBar();
       e.preventDefault(); 
       const addCartElement = { 
         attractionId: window.location.pathname.split('/').pop(), 
@@ -94,8 +113,10 @@ let addCartController = {
         price: addCartView.getPrice(), 
         token: localStorage.getItem("token") ? localStorage.getItem("token") : null 
       }; 
+      
       this.gateData(addCartElement); 
       localStorage.setItem('attractionId',addCartElement.attractionId);
+      this.load.completeLoadingBar();
     }); 
   }, 
 
@@ -147,8 +168,9 @@ let bookingModel = {
 };
 
 let bookingView = {
-  init(){
+  init(load){
     this.bookingElement.bookingTitle.textContent = `你好，${this.bookingElement.username}，待預定行程如下 :`;
+    this.load = load;
    },
 	bookingElement :{
     main : document.querySelector('#booking'),
@@ -313,7 +335,8 @@ let bookingView = {
 };
 
 let bookingController = {
-	init() {
+	init(load) {
+    this.load = load;
 		const bookingElement = {
 			token : localStorage.getItem('token')
 		};
@@ -321,18 +344,22 @@ let bookingController = {
       window.location.href = '/'
       return;
 		}
-		this.getData(bookingElement.token);
+    this.load.showLoadingBar();
+    this.load.skeleton(1);
+		this.getData(bookingElement.token); 
     
 	},
 
 	async getData(token) {
     const data = await bookingModel.getCartData(token);
     this.checkDataExists(data);
+    
 	},
   
   checkDataExists(data){
     if (!data.data){
       bookingView.dataNotExists();
+      this.load.completeLoadingBar();
       return;
     }else{
       let attraction = data.data.attraction
@@ -340,6 +367,7 @@ let bookingController = {
       let price = data.data.price
       let time = data.data.time
       bookingView.dataExists(attraction, date, price, time);
+      this.load.completeLoadingBar();
     };
   },
 
@@ -350,16 +378,16 @@ let bookingController = {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-
-	addCartView.init();
+  const load = new LoaderView()
+	addCartView.init(load);
 	addCartView.bindBookingButton();
 
   const pathSegments = window.location.pathname.split('/');
   if (pathSegments[1] === 'attraction') {
     addCartView.bindCartButton();
-  	addCartController.init();
+  	addCartController.init(load);
   }else if (pathSegments[1] === 'booking'){
-    bookingView.init();
-		bookingController.init();
+    bookingView.init(load);
+		bookingController.init(load);
 	}	
 });

@@ -6,9 +6,11 @@
   <title>Booking</title>
   <link rel="stylesheet" type="text/css" href='/static/css/booking.css'>
   <link rel="stylesheet" type="text/css" href="/static/css/login.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/skeleton.css">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div id="loading-bar"></div>
   <div class="modal__overlay"></div>
   <header class="header">
 	<p class="header__title">台北一日遊</p>
@@ -73,12 +75,15 @@
       <form class="booking__payment-form">
         <div class="booking__contact__element"> 卡片號碼 :
           <div class="tpfield" id="card-number"></div>
+          <span class="field-icon" id="icon-card-number"></span>
         </div>
         <div class="booking__contact__element"> 過期時間 :
           <div class="tpfield" id="card-expiration-date"></div>
+          <span class="field-icon" id="icon-card-expiration-date"></span>
         </div>
         <div class="booking__contact__element"> 驗證密碼 :
           <div class="tpfield" id="card-ccv"></div>
+          <span class="field-icon" id="icon-card-ccv"></span>
         </div>
        </form>
     </section>
@@ -95,7 +100,8 @@
     <p class="footer__container">Copyright © 2021 台北一日遊</p>
   </footer>
   <script src = '/static/js/loginmvc.js'></script>
-	<script src = '/static/js/addcart.js'></script>
+  <script src = '/static/js/addcart.js'></script>
+  <script src="/static/js/loader.js"></script>
   <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
   <script src = '/static/js/pay.js'></script>
 </body>

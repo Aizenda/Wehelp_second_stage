@@ -1,20 +1,31 @@
-.signin__content{
-  max-width: auto;
-  width: 340px;
-  height: 275px; 
-  background-color: #FFFFFF;
-  margin-top:30px;
-  position: absolute;
-  right: 50%; 
-  transform: translateX(50%);
-  border-radius: 5px;
+.signin__content,
+.signup__content {
   display: none;
-  gap: 10px; 
+  opacity: 0;
+  visibility: hidden;
+  width: 340px;
+  height: 275px;
+  background-color: #FFFFFF;
+  margin-top: 30px;
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%) scale(0.95);
+  border-radius: 5px;
+  gap: 10px;
   z-index: 1000;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.signin__content__show{
+.signin__content.show ,
+.signup__content.show{
   display: grid;
+}
+
+.signin__content.animate ,
+.signup__content.animate{
+  opacity: 1;
+  transform: translateX(50%) scale(1);
+  visibility: visible;
 }
  
 .signin__element__color{
@@ -99,26 +110,6 @@
   text-align: center;
   color: #666666;
   cursor: pointer;
-}
-
-.signup__content{
-  max-width: auto;
-  width: 340px;
-  height: 330px; 
-  background-color: #FFFFFF;
-  margin-top:30px;
-  position: absolute;
-  right: 50%; 
-  transform: translateX(50%);
-  border-radius: 5px;
-  display: grid;
-  gap: 10px; 
-  z-index: 1000;
-  display: none;
-}
- 
-.signup__content__show{
-  display: grid;
 }
 
 .signup__element__color{

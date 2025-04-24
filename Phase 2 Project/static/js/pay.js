@@ -92,6 +92,7 @@ const paymentController = {
           },
           '.invalid': {
               'color': 'red'
+    
           },
           '@media screen and (max-width: 400px)': {
             'input': {
@@ -103,9 +104,29 @@ const paymentController = {
   
       TPDirect.card.onUpdate((update) => {
         paymentView.setSubmitButtonState(update.canGetPrime);
+    
+        updateFieldIcon('card-number', update.status.number);
+        updateFieldIcon('card-expiration-date', update.status.expiry);
+        updateFieldIcon('card-ccv', update.status.ccv);
+
+        
       });
+
+      function updateFieldIcon(fieldId, status) {
+        const icon = document.getElementById(`icon-${fieldId}`);
+
+        if (status === 2) {
+          icon.textContent = '❌';
+          icon.style.color = 'red';
+        } else if (status === 1) {
+          icon.textContent = '⏳';
+          icon.style.color = 'gray';
+        } else if (status === 0) {
+          icon.textContent = '✅';
+          icon.style.color = 'green';
+        }
+      }
     },
-  
     async bindPayButton() {
         const payButton = document.querySelector('.booking__pay__button');
         payButton.addEventListener('click', async (e) => {

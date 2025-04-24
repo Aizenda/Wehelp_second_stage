@@ -26,6 +26,7 @@ footer {
   justify-content: space-between;
   align-items: center;
   height: 54px;
+  cursor: pointer;
 }
 
 .header__title {
@@ -91,26 +92,33 @@ footer {
 
 .search__input {
   display: flex;
-  padding-top:5px ;
   color: #757575;
   font-weight: 700;
   width: 400px;
-  height: 44px;
+  height: 50px;
+  padding-left: 10px;
   border-radius: 5px 0 0 5px;
   border: none;
+  outline: none;
 }
 
 .search__button {
   background-color: #448899;
-  height: 46px;
+  height: 50px;
   width: 60px;
   border: none;
   border-radius: 0 5px 5px 0;
+  padding: 0;
+  position: relative;
 }
 
 .search__button > img {
   height: 30px;
   width: 30px;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   cursor: pointer;
 }
 
@@ -165,13 +173,13 @@ footer {
   gap: 30px;
   width: 1200px;
   margin: auto;
-	margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .attractions__element {
   position: relative;
   border: 1px solid #E8E8E8;
-	height: 200px;
+	height: 275.9px;
   border-radius: 5px;
 }
 
@@ -219,6 +227,8 @@ footer {
   font-weight: 700;
 	color: #757575;
 }
+
+
 
 @media screen and (min-width: 601px) and (max-width: 1201px) {
 	.header{

@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/static/css/attraction.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/login.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/skeleton.css">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
   <title>Attraction</title>
 </head>
 <body>
+	<div id="loading-bar"></div>
 	<div class="modal__overlay"></div>
   <header class="header">
 	<p class="header__title">台北一日遊</p>
@@ -57,20 +59,22 @@
   <hr class = "header__hr"/>
   <main>
     <div class="main__grid">
-      	<span class="attraction__element__image">
+		<div class="attraction__element__image">
 			<img src = "/static/imgs/arrow left.png" class="attraction__element__leftArrow">
 			<img src="/static/imgs/arrow right.png" class="attraction__element__rightArrow">
 			<div class="attraction__element__dots"></div>
-		</span>
-		<span class="attraction__element__order">
-			<div class="order__element__name"></div>
-			<div class="order__element__category"></div>
+		</div>
+		<div class="attraction__element__order">
+			<div class="attraction__header">
+				<div class="order__element__name"></div>
+				<div class="order__element__category"></div>
+			</div>
 			<form id="cartForm" method="post">
 				<div class="order__element">
 					<div>訂購導覽行程</div>
 					<div>以此景點為中心的一日行程，帶您探索城市角落故事</div>
 					<div style="display: flex; text-align: center;">
-						選擇日期：<input type="date" name="date" id="date" required >
+						選擇日期：<input type="date" name="date" id="date" required  min="">
 					</div>
 					<div style="display: flex; text-align: center;">
 						選擇時間：
@@ -85,7 +89,7 @@
 					<button id="cart" type="submit">開始預約行程</button>
 				</div>
 			</form>
-		</span>
+		</div>
 		<hr class = "main__hr"/>
 		<div class="describe__element">
 			<div class="describe__element__introduce">
@@ -102,8 +106,9 @@
     </div>
 	
   </main>
-  <footer>COPYRIGHT © 2021 台北一日遊</footer>-
+  <footer>COPYRIGHT © 2021 台北一日遊</footer>
 	<script src = '/static/js/loginmvc.js'></script>
+	<script src="/static/js/loader.js"></script> 
 	<script src = '/static/js/attraction.js'></script>
 	<script src = '/static/js/addcart.js'></script> 
 </body>

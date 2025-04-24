@@ -52,19 +52,27 @@ class LoginView {
 	}
 
 	signinShow() {
-		this.elements.signinForm.classList.add('signin__content__show');
+		this.elements.signinForm.classList.add('show');
+		setTimeout(()=>{
+			this.elements.signinForm.classList.add('animate');
+		},50)
 		this.elements.overlay.classList.add('modal__overlay__show');
 		this.elements.signinRequest.classList.remove('signin__element__request__show');
 	}
 
 	signupShow() {
-		this.elements.signupForm.classList.add('signup__content__show');
+		this.elements.signupForm.classList.add('show');
+		setTimeout(()=>{
+			this.elements.signupForm.classList.add('animate');
+		},50)
 		this.elements.signinRequest.classList.remove('signin__element__request__show');
 	}
 
 	close() {
-		this.elements.signinForm.classList.remove('signin__content__show');
-		this.elements.signupForm.classList.remove('signup__content__show');
+		this.elements.signinForm.classList.remove('show');
+		this.elements.signinForm.classList.remove('animate');
+		this.elements.signupForm.classList.remove('show');
+		this.elements.signupForm.classList.remove('animate');
 		this.elements.overlay.classList.remove('modal__overlay__show');
 	}
 

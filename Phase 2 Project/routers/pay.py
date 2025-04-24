@@ -1,8 +1,8 @@
 from fastapi import *
 from fastapi.responses import JSONResponse
 from database.DB import mysql_pool
-from mysql.connector.errors import IntegrityError, Error
-import jwt,os,random,string,httpx,json
+from mysql.connector.errors import Error
+import jwt,os,random,string,httpx
 from datetime import datetime
 
 router = APIRouter()

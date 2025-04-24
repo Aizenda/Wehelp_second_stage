@@ -102,7 +102,7 @@ async def post_booking(request:Request):
 
 		decode_token_data = decode_token.get("data")
 		userid = decode_token_data.get("id")
-
+		
 		insert_query = """
         INSERT INTO shopping_cart (date, time, price, attractionId, userId)
         VALUES (%s, %s, %s, %s, %s)

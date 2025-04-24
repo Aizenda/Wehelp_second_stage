@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/static/css/index.css">
   <link rel="stylesheet" type="text/css" href="/static/css/login.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/skeleton.css">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
   <title>Index</title>
   
 </head>
 <body>
+  <div id="loading-bar"></div>
   <div class="modal__overlay"></div>
   <header class="header">
     <p class="header__title">台北一日遊</p>
@@ -24,7 +26,7 @@
         <h2 class="search__heading__H2">輕鬆享受台北一日悠閒</h2>
         <h4 class="search__heading__H4">探索每個角落，體驗城市的深度旅遊行程</h4>
         <div class="search">
-          <input type="text" class="search__input" placeholder="   輸入景點名稱查詢">
+          <input type="text" class="search__input" placeholder="輸入景點名稱查詢">
           <button type="submit" class="search__button">
             <img src="/static/imgs/icon_search.png" alt="搜尋" />
           </button>
@@ -78,7 +80,9 @@
   <footer>
     COPYRIGHT © 2021 台北一日遊
   </footer>
+  
   <script src="/static/js/index.js"></script>
+  <script src="/static/js/loader.js"></script> 
   <script src="/static/js/loginmvc.js"></script>
   <script src="/static/js/addcart.js"></script>
 </body>
