@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/login.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+  <title>Index</title>
+  
+</head>
+<body>
+  <div class="modal__overlay"></div>
+  <header class="header">
+    <p class="header__title">台北一日遊</p>
+    <nav class="header__nav">
+      <button class="header__button--book" id="reserve">預定行程</button>
+      <button class="header__button--signin" id="signin">登入/註冊</button>
+    </nav>
+  </header>
+  <main>
+    <div class="search__section">
+      <div class="search__section__content">
+        <h2 class="search__heading__H2">輕鬆享受台北一日悠閒</h2>
+        <h4 class="search__heading__H4">探索每個角落，體驗城市的深度旅遊行程</h4>
+        <div class="search">
+          <input type="text" class="search__input" placeholder="   輸入景點名稱查詢">
+          <button type="submit" class="search__button">
+            <img src="/static/imgs/icon_search.png" alt="搜尋" />
+          </button>
+        </div>
+       </div>
+      <form id="signinForm" class="signin__content">
+        <div class="signin__element__color"></div>
+        <div class="signin__element__title">登入會員帳號</div>
+        <img src="/static/imgs/8de46cdc235bdc9b370c21e0028a68e6.png" class="signin__content__img"/>
+        <div class="signin__element__email">
+            <input type="email" name="email" placeholder="輸入電子信箱" required/>
+        </div>
+        <div class="signin__element__password">
+            <input type="password" name="password" placeholder="輸入密碼" required />
+        </div>
+        <div class="signin__element__request"></div>
+        <div class="signin__content__buttom">
+          <button type="submit" class="signin__content__buttom__style">登入帳號</button>
+        </div>
+        <div class="signin__element__link" class="signin__content__link">還沒有帳戶？點此註冊</div>
+      </form>
+
+      <form id="signupForm" class="signup__content">
+        <div class="signup__element__color"></div>
+        <div class="signup__element__title">註冊會員帳號</div>
+        <img src="/static/imgs/8de46cdc235bdc9b370c21e0028a68e6.png" class="signin__content__img"/>
+        <div class="signup__element__email">
+          <input type="text" id="name" placeholder="輸入姓名" required />
+      </div>
+        <div class="signup__element__email">
+            <input type="email" id="email" placeholder="輸入電子信箱" required />
+        </div>
+        <div class="signup__element__password">
+            <input type="password" id="password" placeholder="輸入密碼" required />
+        </div>
+        <div class="signup__element__request"></div>
+        <div class="signup__content__buttom">
+          <button type="submit" class="signup__content__buttom__style">註冊帳號</button>
+        </div>
+        <div class="signup__element__link" class="signup__content__link">已經有帳戶了？點此登入</div>
+      </div>
+    </form>
+
+    <div class="mrt__title__container">
+      <img src="/static/imgs/arrow left.png" class="arrow--left" alt="Left Arrow">
+      <div class="mrt__title"></div>
+      <img src="/static/imgs/arrow right.png" class="arrow--right" alt="Right Arrow">
+    </div>
+    <div class="grid"></div>
+  </main>
+  <footer>
+    COPYRIGHT © 2021 台北一日遊
+  </footer>
+  <script src="/static/js/index.js"></script>
+  <script src="/static/js/loginmvc.js"></script>
+  <script src="/static/js/addcart.js"></script>
+</body>
+</html>
