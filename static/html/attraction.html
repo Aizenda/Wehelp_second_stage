@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/static/css/attraction.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/login.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/skeleton.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+  <title>Attraction</title>
+</head>
+<body>
+	<div id="loading-bar"></div>
+	<div class="modal__overlay"></div>
+  <header class="header">
+	<p class="header__title">台北一日遊</p>
+    <nav class="header__nav">
+      <button class="header__button--book" id="reserve">預定行程</button>
+      <button class="header__button--signin" id="signin">登入/註冊</button>
+    </nav>
+  </header>
+	<form id="signinForm" class="signin__content">
+		<div class="signin__element__color"></div>
+		<div class="signin__element__title">登入會員帳號</div>
+		<img src="/static/imgs/8de46cdc235bdc9b370c21e0028a68e6.png" class="signin__content__img"/>
+		<div class="signin__element__email">
+				<input type="email" name="email" placeholder="輸入電子信箱" required/>
+		</div>
+		<div class="signin__element__password">
+				<input type="password" name="password" placeholder="輸入密碼" required />
+		</div>
+		<div class="signin__element__request"></div>
+		<div class="signin__content__buttom">
+			<button type="submit" class="signin__content__buttom__style">登入帳號</button>
+		</div>
+		<div class="signin__element__link" class="signin__content__link">還沒有帳戶？點此註冊</div>
+	</form>
+
+	<form id="signupForm" class="signup__content">
+		<div class="signup__element__color"></div>
+		<div class="signup__element__title">註冊會員帳號</div>
+		<img src="/static/imgs/8de46cdc235bdc9b370c21e0028a68e6.png" class="signin__content__img"/>
+		<div class="signup__element__email">
+			<input type="text" id="name" placeholder="輸入姓名" required />
+	</div>
+		<div class="signup__element__email">
+				<input type="email" id="email" placeholder="輸入電子信箱" required />
+		</div>
+		<div class="signup__element__password">
+				<input type="password" id="password" placeholder="輸入密碼" required />
+		</div>
+		<div class="signup__element__request"></div>
+		<div class="signup__content__buttom">
+			<button type="submit" class="signup__content__buttom__style">註冊帳號</button>
+		</div>
+		<div class="signup__element__link" class="signup__content__link">已經有帳戶了？點此登入</div>
+	</div>
+</form>
+  <hr class = "header__hr"/>
+  <main>
+    <div class="main__grid">
+		<div class="attraction__element__image">
+			<img src = "/static/imgs/arrow left.png" class="attraction__element__leftArrow">
+			<img src="/static/imgs/arrow right.png" class="attraction__element__rightArrow">
+			<div class="attraction__element__dots"></div>
+		</div>
+		<div class="attraction__element__order">
+			<div class="attraction__header">
+				<div class="order__element__name"></div>
+				<div class="order__element__category"></div>
+			</div>
+			<form id="cartForm" method="post">
+				<div class="order__element">
+					<div>訂購導覽行程</div>
+					<div>以此景點為中心的一日行程，帶您探索城市角落故事</div>
+					<div style="display: flex; text-align: center;">
+						選擇日期：<input type="date" name="date" id="date" required  min="">
+					</div>
+					<div style="display: flex; text-align: center;">
+						選擇時間：
+						<label>
+								<input type="radio" name="time" value="2000" checked>上半天
+						</label>
+						<label>
+								<input type="radio" name="time" value="2500">下半天
+						</label>
+					</div>
+					<div>導覽費用：<span id="price">2000</span> 元</div>
+					<button id="cart" type="submit">開始預約行程</button>
+				</div>
+			</form>
+		</div>
+		<hr class = "main__hr"/>
+		<div class="describe__element">
+			<div class="describe__element__introduce">
+			</div>
+			<div style="color: #666666; font-weight: 700; font-size: 16px;">
+				景點地址：
+				<div class="describe__element__address"></div>
+			</div>
+			<div style="color: #666666; font-weight: 700; font-size: 16px;">
+				交通方式：
+				<div class="describe__element__transportation"></div>
+			</div>
+		</div>
+    </div>
+	
+  </main>
+  <footer>COPYRIGHT © 2021 台北一日遊</footer>
+	<script src = '/static/js/loginmvc.js'></script>
+	<script src="/static/js/loader.js"></script> 
+	<script src = '/static/js/attraction.js'></script>
+	<script src = '/static/js/addcart.js'></script> 
+</body>
+</html> 

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking</title>
+  <link rel="stylesheet" type="text/css" href='/static/css/booking.css'>
+  <link rel="stylesheet" type="text/css" href="/static/css/login.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/skeleton.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="loading-bar"></div>
+  <div class="modal__overlay"></div>
+  <header class="header">
+	<p class="header__title">台北一日遊</p>
+    <nav class="header__nav">
+      <button class="header__button--book" id="reserve">預定行程</button>
+      <button class="header__button--signin" id="signin">登入/註冊</button>
+    </nav>
+  </header>
+  <form id="signinForm" class="signin__content">
+    <div class="signin__element__color"></div>
+    <div class="signin__element__title">登入會員帳號</div>
+    <img src="/static/imgs/8de46cdc235bdc9b370c21e0028a68e6.png" class="signin__content__img"/>
+    <div class="signin__element__email">
+        <input type="email" name="email" placeholder="輸入電子信箱" required/>
+    </div>
+    <div class="signin__element__password">
+        <input type="password" name="password" placeholder="輸入密碼" required />
+    </div>
+    <div class="signin__element__request"></div>
+    <div class="signin__content__buttom">
+      <button type="submit" class="signin__content__buttom__style">登入帳號</button>
+    </div>
+    <div class="signin__element__link" class="signin__content__link">還沒有帳戶？點此註冊</div>
+  </form>
+
+  <form id="signupForm" class="signup__content">
+    <div class="signup__element__color"></div>
+    <div class="signup__element__title">註冊會員帳號</div>
+    <img src="/static/imgs/8de46cdc235bdc9b370c21e0028a68e6.png" class="signin__content__img"/>
+    <div class="signup__element__email">
+      <input type="text" id="name" placeholder="輸入姓名" required />
+    </div>
+    <div class="signup__element__email">
+        <input type="email" id="email" placeholder="輸入電子信箱" required />
+    </div>
+    <div class="signup__element__password">
+        <input type="password" id="password" placeholder="輸入密碼" required />
+    </div>
+    <div class="signup__element__request"></div>
+    <div class="signup__content__buttom">
+      <button type="submit" class="signup__content__buttom__style">註冊帳號</button>
+    </div>
+    <div class="signup__element__link" class="signup__content__link">已經有帳戶了？點此登入</div>
+    </div>
+  </form>
+  <hr class="header__separator" />
+  <main id="booking" class="booking">
+    <div class="booking__title"></div>
+    <div class="booking__container">
+    </div>
+    <hr class="booking__separator" />
+    
+    <section id="contact-information" class="booking__contact">
+      <div class="booking__contact-title"></div>
+      <form class="booking__contact-form">
+      </form>
+    </section>
+    <hr class="booking__contact-separator" />
+
+    <section id="credit-card" class="booking__payment">
+      <div class="booking__payment-title"></div>
+      <form class="booking__payment-form">
+        <div class="booking__contact__element"> 卡片號碼 :
+          <div class="tpfield" id="card-number"></div>
+          <span class="field-icon" id="icon-card-number"></span>
+        </div>
+        <div class="booking__contact__element"> 過期時間 :
+          <div class="tpfield" id="card-expiration-date"></div>
+          <span class="field-icon" id="icon-card-expiration-date"></span>
+        </div>
+        <div class="booking__contact__element"> 驗證密碼 :
+          <div class="tpfield" id="card-ccv"></div>
+          <span class="field-icon" id="icon-card-ccv"></span>
+        </div>
+       </form>
+    </section>
+    <hr class="booking__payment-separator"/>
+
+    <div id = "booking_pay-container" class="booking__pay">
+      <div class="booking__pay__title"></div>
+      <button class="booking__pay__button" type="submit">確認並付款</button>
+    </div>
+    
+  </main>
+
+  <footer class="footer">
+    <p class="footer__container">Copyright © 2021 台北一日遊</p>
+  </footer>
+  <script src = '/static/js/loginmvc.js'></script>
+  <script src = '/static/js/addcart.js'></script>
+  <script src="/static/js/loader.js"></script>
+  <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+  <script src = '/static/js/pay.js'></script>
+</body>
+</html>

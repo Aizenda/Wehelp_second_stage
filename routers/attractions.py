@@ -11,23 +11,19 @@ async def get_attractions(page: int = Query(0, ge=0), keyword: str = Query(None)
 	conn = None
 	cursor = None
 	try:
-		# 取得資料庫連接
 		conn = mysql_pool.get_connection()
 		cursor = conn.cursor(dictionary=True)
 		
-		# 計算最大頁數
 		page_size = 12
 		cursor.execute("SELECT COUNT(*) AS total_rows FROM attractions")
 		total_rows = cursor.fetchone()
 		max_page = total_rows["total_rows"] // page_size
-
-		# 如果使用者輸入的頁碼超過最大頁數，返回錯誤
+	
 		if page > max_page:
 			return JSONResponse({"error": True, "message": "超過最大頁數"}, status_code=400)
 		
 		limit_data = page * 12
 
-		# 依據是否有 keyword 來選擇查詢方式
 		if keyword:
 			cursor.execute("""
 			SELECT COUNT(*) AS total_rows 
@@ -36,8 +32,6 @@ async def get_attractions(page: int = Query(0, ge=0), keyword: str = Query(None)
 			WHERE a.name LIKE %s OR m.mrt LIKE %s;
 			""", ('%' + keyword + '%', '%' + keyword + '%'))
 			total_rows = cursor.fetchone()
-
-			#刪除無效code
 
 			max_page = total_rows["total_rows"] // page_size
 
